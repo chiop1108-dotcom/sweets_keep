@@ -1,6 +1,19 @@
 Rails.application.routes.draw do
   resource :session
   resources :passwords, param: :token
+
+  resources :users
+  resources :posts
+
+  # topページ
+  root "static_pages#top"
+  # aboutページ 静的なデータ処理を伴わないページ(get)
+  get "about", to: "static_pages#about"
+  # mypage
+  get "mypage", to: "users#mypage"
+
+  # 認証機能のルーティングは後で書く
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
