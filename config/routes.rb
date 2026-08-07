@@ -6,9 +6,9 @@ Rails.application.routes.draw do
   resources :posts
 
   # topページ
-  root "static_pages#top"
+  root "homes#top"
   # aboutページ 静的なデータ処理を伴わないページ(get)
-  get "about", to: "static_pages#about"
+  get "about", to: "homes#about"
   # mypage
   get "mypage", to: "users#mypage"
 

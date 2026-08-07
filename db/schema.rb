@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_08_05_151936) do
+ActiveRecord::Schema[8.0].define(version: 2026_08_05_174027) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -79,8 +79,18 @@ ActiveRecord::Schema[8.0].define(version: 2026_08_05_151936) do
     t.string "shelf_life"
     t.string "area"
     t.integer "price"
+    t.integer "carrying_time"
     t.index ["rating"], name: "index_posts_on_rating", unique: true
     t.index ["user_id"], name: "index_posts_on_user_id"
+  end
+
+  create_table "sessions", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "ip_address"
+    t.string "user_agent"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_sessions_on_user_id"
   end
 
   create_table "tags", force: :cascade do |t|
@@ -93,15 +103,11 @@ ActiveRecord::Schema[8.0].define(version: 2026_08_05_151936) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "name", null: false
-    t.string "email", null: false
+    t.string "email_address", null: false
     t.string "password_digest", null: false
-    t.text "profile_text", null: false
-    t.integer "role", default: 0, null: false
-    t.boolean "is_deleted", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
@@ -113,4 +119,5 @@ ActiveRecord::Schema[8.0].define(version: 2026_08_05_151936) do
   add_foreign_key "post_tags", "posts"
   add_foreign_key "post_tags", "tags"
   add_foreign_key "posts", "users"
+  add_foreign_key "sessions", "users"
 end
