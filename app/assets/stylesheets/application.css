@@ -8,3 +8,34 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+
+ /* ナビゲーション全体（左メニューと右グループを左右両端に配置） */
+.header-nav {
+  display: flex;
+  justify-content: space-between; /* リンクメニューと検索バーを左右両端に分ける */
+  align-items: center;            /* 上下の中央揃え */
+  padding: 10px 20px;
+}
+
+/* 左側リストを横並びにする */
+.header-menu-left {
+  display: flex;
+  list-style: none; /* リストの行頭記号「•」を消す */
+  margin: 0;
+  padding: 0;
+  gap: 20px;       /* リンク同士の間隔 */
+}
+
+/* 右側グループ（Topリンクと検索バー）を横並びにする */
+.header-menu-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* 検索フォーム内の「入力欄」と「ボタン」を横並びにする */
+.search-bar form {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}

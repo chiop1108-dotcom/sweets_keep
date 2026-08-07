@@ -13,6 +13,9 @@ Rails.application.routes.draw do
   # mypage
   get "mypage", to: "users#mypage"
 
+  # PostsControllerのsearchアクションに送る
+  get "search", to: "posts#search", as: :search
+
   # 認証機能のルーティングは後で書く
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
