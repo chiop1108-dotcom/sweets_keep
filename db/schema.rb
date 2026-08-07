@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_08_05_174027) do
+ActiveRecord::Schema[8.0].define(version: 2026_08_07_185336) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -107,7 +107,16 @@ ActiveRecord::Schema[8.0].define(version: 2026_08_05_174027) do
     t.string "password_digest", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "name", null: false
+    t.text "profile_text"
+    t.integer "role", default: 0, null: false
+    t.boolean "is_deleted", default: false, null: false
+    t.string "name_kana", null: false
+    t.string "user_name", null: false
+    t.string "telephone_number", null: false
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
+    t.index ["telephone_number"], name: "index_users_on_telephone_number"
+    t.index ["user_name"], name: "index_users_on_user_name", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

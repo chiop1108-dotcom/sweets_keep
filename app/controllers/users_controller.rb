@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+  # 認証をスキップ: サインアップ（new, create）はログイン前に行うため
+  allow_unauthenticated_access only: [:new, :create] 
+
   def mypage
   end
 
@@ -45,7 +48,16 @@ class UsersController < ApplicationController
   def user_params
     # :user キー配下の許可したいカラムを指定
     # password_confirmation（パスワード再確認用）
-    params.require(:user).permit(:name, :email, :password, :password_confirmation, :profile_text, :role, :is_deleted)
+    params.require(:user).permit(
+      :name,
+      :name_kana,
+      :user_name,
+      :email_address,
+      :telephone_number,
+      :password,
+      :password_confirmation,
+      :profile_text,
+    )
   end
 
 end
