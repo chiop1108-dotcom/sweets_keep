@@ -44,7 +44,7 @@
           <%= link_to "Top", root_path %>
 
           <!-- 共通：検索バー -->
-          <div class="search-bar">
+          <div class="header-search-bar">
             <%= form_with url: search_path, method: :get do |f| %>
               <%= f.text_field :query, placeholder: "検索..." %>
               <%= f.submit "検索" %>

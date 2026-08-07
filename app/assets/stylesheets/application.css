@@ -9,6 +9,7 @@
  * Consider organizing styles into separate files for maintainability.
  */
 
+ /* ヘッダー */
  /* ナビゲーション全体（左メニューと右グループを左右両端に配置） */
 .header-nav {
   display: flex;
@@ -38,4 +39,68 @@
   display: flex;
   align-items: center;
   gap: 5px;
+}
+
+/* aboutページ */
+/* 全体の左右に均等な余白を設定 */
+.about-container {
+  background-image: image-url('about-bg.jpg');
+  
+  max-width: 800px; /* 必要に応じて最大幅を調整 */
+  margin: 0 auto;   /* 左右均等に余白を作って中央配置 */
+  padding: 0 20px;  /* 画面幅が狭いときの左右余白 */
+}
+
+/* 見出しの配置 */
+.about-title-left {
+  text-align: left;
+}
+
+.about-title-right {
+  text-align: right;
+}
+
+.about-subtitle {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+/* pタグの中央配置と余白の調整 */
+.about-text {
+  text-align: center;
+  margin-bottom: 1.5rem; /* <br> の代わりにmarginで余白を作るのが推奨されます */
+}
+
+/* aboutページの検索バー */
+/* フォーム全体を中央揃え＆幅調整 */
+.about-search-bar {
+  display: flex;
+  justify-content: center; /* フォーム全体を横方向の中央に配置 */
+  margin: 20px auto;        /* 上下に余白を作り、左右中央に寄せる */
+  width: 100%;             /* 親要素いっぱいに広げる */
+  max-width: 600px;        /* 広がりすぎないよう最大横幅を指定（お好みで調整） */
+}
+
+/* formタグ内の要素を横並びにする */
+.about-search-bar form {
+  display: flex;
+  width: 100%;             /* 横幅いっぱいに使う */
+  gap: 8px;                /* 入力欄とボタンの間隔 */
+}
+
+/* 入力欄を横長にする */
+.about-search-bar input[type="text"] {
+  flex: 1;                 /* 可能な限り横に広げる */
+  padding: 10px 15px;      /* 内側の余白を増やして押しやすく */
+  font-size: 16px;         /* 文字サイズ */
+  border: 1px solid #ccc;
+  border-radius: 4px;      /* 角を丸くする */
+}
+
+/* 検索ボタンの装飾 */
+.about-search-bar input[type="submit"] {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 4px;
 }
