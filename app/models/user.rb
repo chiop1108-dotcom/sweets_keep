@@ -3,6 +3,9 @@ class User < ApplicationRecord
   has_secure_password
   has_many :sessions, dependent: :destroy
 
+   # ActiveStorage 画像を付けたいmodel
+  has_one_attached :profile_image
+
   # アソシエーション
   has_many :posts, dependent: :destroy
   has_many :comments, dependent: :destroy
@@ -24,11 +27,6 @@ class User < ApplicationRecord
   
   def set_default_role
     self.role ||= :general
-  end
-
-  # ActiveStorage 画像を付けたいmodel
-  class List < ApplicationRecord
-    has_one_attached :image
   end
   
 end

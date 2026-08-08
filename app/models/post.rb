@@ -2,6 +2,9 @@ class Post < ApplicationRecord
   # アソシエーション
   belongs_to :user
 
+   # ActiveStorage 画像を付けたいmodel
+  has_one_attached :image
+
   # アソシエーション
   has_many :tags, through: :post_tags # 多：多の関係を定義
   has_many :post_tags, dependent: :destroy
@@ -21,11 +24,6 @@ class Post < ApplicationRecord
     cool_dark_place: 1, #冷暗所
     refrigerated: 2, #冷蔵
     frozen: 3 #冷凍
-  }
-
-  # ActiveStorage 画像を付けたいmodel
-  class List < ApplicationRecord
-    has_one_attached :image
-  end
+  }, prefix: true
 
 end

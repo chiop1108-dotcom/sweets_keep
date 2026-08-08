@@ -1,2 +1,15 @@
-<h1>Homes#top</h1>
-<p>Find me in app/views/homes/top.html.erb</p>
+<div class="top-container">
+
+  <h2 class="top-title">
+    手土産選びを解決！<br>
+    持ち歩き時間やエリアから探せるレビューサイト
+  </h2>
+
+  <div class="top-search-bar">
+    <%= form_with url: search_path, method: :get do |f| %>
+      <%= f.text_field :query, placeholder: "検索..." %>
+      <%= f.submit "検索" %>
+    <% end %>
+  </div>
+
+</div>

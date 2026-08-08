@@ -29,12 +29,11 @@ class UsersController < ApplicationController
     # 許可されたパラメータを使ってインスタンスを作成
     #フォームから送られてきたデータをセットした新しいオブジェクトを作成
     @user = User.new(user_params)
-    # 会員登録が完了した直後に自動ログインさせる
-    session[:user_id] = @user.id
-
+   
     if @user.save
       # 登録成功時：ログイン状態にしてマイページ（またはトップ）へリダイレクト
-      # session[:user_id] = @user.id (認証機能実装後に有効化)
+      # 会員登録が完了した直後に自動ログインさせる
+      session[:user_id] = @user.id
       redirect_to user_path(@user), notice: "会員登録が完了しました！"
     else
       # 登録失敗時：新規登録画面を再描画

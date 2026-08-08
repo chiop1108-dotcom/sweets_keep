@@ -1,2 +1,38 @@
-<h1>Posts#show</h1>
-<p>Find me in app/views/posts/show.html.erb</p>
+<h1>スイーツ投稿詳細</h1>
+
+<div class="post-detail">
+  <!-- 1. 商品画像 -->
+  <div>
+    <%= image_tag @post.image if @post.image.attached? %>
+  </div>
+
+  <!-- 2. 商品名・ショップ名 -->
+  <h1><%= @post.product_name %></h1>
+  <p class="shop-name">ショップ: <%= @post.shop_name %></p>
+
+  <!-- 3. 評価・4. 価格 -->
+  <p>評価: ★<%= @post.rating %></p>
+  <p>価格: ¥<%= @post.price %></p>
+
+  <!-- 5. 補足情報（保存温度・持ち歩き時間・賞味期限・エリア） -->
+  <p>保存温度: <%= @post.starage_temperature %></p>
+  <p>持ち歩き可能時間: <%= @post.carrying_time %>時間</p>
+  <p>賞味期限: <%= @post.shelf_life %>日</p>
+  <p>エリア: <%= @post.area %></p>
+
+  <!-- 6. 説明文 -->
+  <p class="description"><%= @post.description %></p>
+
+  <!-- 7. 投稿者 (user_id経由のアソシエーション) -->
+  <p class="author">投稿者: <%= @post.user.user_name %></p>
+
+  <!-- 一覧画面に戻るリンク -->
+  <%= link_to "一覧に戻る", posts_path %>
+
+  <!-- 編集・削除のリンク -->
+  <% if @post.user == Current.user %>
+    <%= link_to "更新する", edit_post_path(@post) %>
+    <%= link_to "削除する", post_path(@post), data: { turbo_method: :delete } %>
+  <% end %>
+
+</div>

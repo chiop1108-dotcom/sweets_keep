@@ -1,0 +1,57 @@
+<h1>新規投稿</h1>
+
+<%= form_with model: @post do |f| %>
+  <div>
+    <%= f.label :image, "画像" %><br>
+    <%= f.file_field :image, accept: "image/*" %>
+  </div>
+
+  <div>
+    <%= f.label :product_name, "商品名" %><br>
+    <%= f.text_field :product_name %>
+  </div>
+
+  <div>
+    <%= f.label :shop_name, "店名" %><br>
+    <%= f.text_field :shop_name %>
+  </div>
+
+  <div>
+    <%= f.label :price, "価格" %><br>
+    <%= f.number_field :price %>
+  </div>
+
+  <div>
+    <%= f.label :rating, "評価（レーティング）" %><br>
+    <%= f.number_field :rating, step: "0.1" %>
+  </div>
+
+  <div>
+    <%= f.label :area, "エリア・地域" %><br>
+    <%= f.text_field :area %>
+  </div>
+
+  <div>
+    <%= f.label :starage_temperature, "保存温度" %><br>
+    <%= f.text_field :starage_temperature %>
+  </div>
+
+  <div>
+    <%= f.label :carrying_time, "持ち歩き可能時間" %><br>
+    <%= f.text_field :carrying_time %>
+  </div>
+
+  <div>
+    <%= f.label :shelf_life, "賞味期限・消費期限" %><br>
+    <%= f.text_field :shelf_life %>
+  </div>
+
+  <div>
+    <%= f.label :description, "説明・詳細" %><br>
+    <%= f.text_area :description %>
+  </div>
+
+  <div>
+    <%= f.submit "投稿する" %>
+  </div>
+<% end %>
