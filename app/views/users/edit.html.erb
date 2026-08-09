@@ -1,2 +1,60 @@
-<h1>Users#edit</h1>
-<p>Find me in app/views/users/edit.html.erb</p>
+<h2>プロフィール編集</h2>
+
+<%= form_with model: @user do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= @user.errors.count %>件のエラーが発生しました:</h2>
+      <ul>
+        <% @user.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <!-- プロフィール画像 -->
+  # file_field(ファイル選択フォーム)
+  <div class="field">
+    <%= f.label :profile_image, "プロフィール画像" %><br>
+    <%= f.file_field :profile_image, accept: "image/*" %>
+  </div>
+
+  <!-- 名前（氏名） -->
+  <div class="field">
+    <%= f.label :name, "名前" %><br>
+    <%= f.text_field :name, autofocus: true %>
+  </div>
+
+  <!-- フリガナ -->
+  <div class="field">
+    <%= f.label :name_kana, "フリガナ" %><br>
+    <%= f.text_field :name_kana %>
+  </div>
+
+  <!-- ユーザー名 -->
+  <div class="field">
+    <%= f.label :user_name, "ユーザー名" %><br>
+    <%= f.text_field :user_name %>
+  </div>
+
+  <!-- メールアドレス -->
+  <div class="field">
+    <%= f.label :email_address, "メールアドレス" %><br>
+    <%= f.email_field :email_address %>
+  </div>
+
+  <!-- 電話番号 -->
+  <div class="field">
+    <%= f.label :telephone_number, "電話番号" %><br>
+    <%= f.telephone_field :telephone_number %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "編集を保存" %>
+  </div>
+<% end %>
+
+<hr>
+
+<!-- 退会画面へ遷移するボタン -->
+<%= link_to "退会する", unsubscribe_user_path(@user) %>

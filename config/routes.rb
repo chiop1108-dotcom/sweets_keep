@@ -3,8 +3,13 @@ Rails.application.routes.draw do
   resource :session
   resources :passwords, param: :token
 
-  resources :users
-  resources :posts
+    resources :posts
+    resources :users do
+      member do
+        # 退会確認画面 (/users/:id/unsubscribe)
+        get :unsubscribe 
+      end
+    end
 
   # topページ
   root "homes#top"

@@ -28,5 +28,15 @@ class User < ApplicationRecord
   def set_default_role
     self.role ||= :general
   end
+
+  # 画像が存在しない場合はデフォルト画像（no_image.jpg等）を返すメソッド
+  def get_profile_image(width, height)
+    unless profile_image.attached?
+      # assets/images/no_image.jpg などを配置しておく必要があります
+      file_path = Rails.root.join('app/assets/images/logo.png')
+      profile_image.attach(io: File.open(file_path), filename: 'default-logo.png', content_type: 'image/png')
+    end
+    profile_image.variant(resize_to_limit: [width, height]).processed
+  end
   
 end

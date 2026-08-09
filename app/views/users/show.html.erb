@@ -1,2 +1,49 @@
-<h1>Users#show</h1>
-<p>Find me in app/views/users/show.html.erb</p>
+<h2><%= @user == Current.user ? "マイページ" : "ユーザー詳細" %></h2>
+
+<!-- ユーザーの詳細 -->
+<div>
+
+  <h3><%= @user.name %></h3>
+
+  <% if @user.profile_image.attached? %>
+    <%= image_tag @user.profile_image.variant(resize_to_limit: [100, 100]) %>
+  <% else %>
+    <%= image_tag 'logo.png', size: '100x100' %>
+  <% end %>
+
+  <!-- ログイン済み、かつ、ログイン中のユーザー本人である場合のみ表示 -->
+  <% if authenticated? && @user == Current.user %>
+    <p><%= link_to "プロフィール編集", edit_user_path(@user) %></p>
+  <% end %>
+
+</div>
+
+<!-- ユーザーの投稿一覧 -->
+
+<% @posts.each do |post| %>
+  <div class="post-card">
+      <!-- 1. 商品画像 画像押下で詳細画面へ -->
+      <div>
+        <%= link_to post_path(post) do %>
+          <%= image_tag post.image if post.image.attached? %>
+        <% end %>
+      </div>
+
+      <!-- 2. 商品名 -->
+      <h2><%= post.product_name %></h2>
+
+      <!-- 3. 評価・4. 価格 -->
+      <p>評価: ★<%= post.rating %></p>
+      <p>価格: ¥<%= post.price %></p>
+
+      <!-- 5. 持ち歩き時間・6. エリア -->
+      <p>持ち歩き可能時間: <%= post.carrying_time %>時間</p>
+      <p>エリア: <%= post.area %></p>
+
+      <!-- 7. 投稿者 -->
+      <p>投稿者: <%= post.user.user_name %></p>
+
+      <!-- 詳細ページへのリンク -->
+      <%= link_to "詳細を見る", post_path(post) %>
+    </div>
+<% end %>

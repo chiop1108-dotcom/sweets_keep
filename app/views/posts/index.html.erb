@@ -3,9 +3,11 @@
 <div class="posts-container">
   <% @posts.each do |post| %>
     <div class="post-card">
-      <!-- 1. 商品画像 -->
+      <!-- 1. 商品画像 画像押下で詳細画面へ -->
       <div>
-        <%= image_tag post.image if post.image.attached? %>
+        <%= link_to post_path(post) do %>
+          <%= image_tag post.image if post.image.attached? %>
+        <% end %>
       </div>
 
       <!-- 2. 商品名 -->

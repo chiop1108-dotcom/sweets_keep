@@ -1,8 +1,11 @@
 class PostsController < ApplicationController
   # 未ログインでも閲覧可能な画面
   allow_unauthenticated_access only: [:index]
+  # 未ログイン許可アクションでも、ログイン中なら Current.user を復元する
+  before_action :resume_session, only: [:index]
 
   def new
+
     # フォーム用の空の新しいPostオブジェクトを作成
     @post = Post.new
   end

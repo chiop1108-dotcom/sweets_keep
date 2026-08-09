@@ -1,11 +1,17 @@
 class UsersController < ApplicationController
   # 認証をスキップ: サインアップ（new, create）はログイン前に行うため
-  allow_unauthenticated_access only: [:new, :create] 
+  allow_unauthenticated_access only: [:new, :create, :show]
+  # 1. ログインチェック（未ログインならログイン画面へ）
+  before_action :require_authentication, only: [:edit, :update, :unsubscribe, :destroy]
+  # 2. 本人チェック（他人ならリダイレクト）
+  before_action :ensure_correct_user, only: [:edit, :update, :unsubscribe, :destroy]
 
-  def mypage
+  def unsubscribe
+    @user = User.find(params[:id])
   end
 
   def edit
+    @user = User.find(params[:id])
   end
 
   def show
@@ -15,9 +21,20 @@ class UsersController < ApplicationController
   end
 
   def update
+    @user = User.find(params[:id])
+    if @user.update(user_params)
+      redirect_to user_path(@user), notice: "プロフィールを更新しました"
+    else
+      flash.now[:notice] = "更新に失敗しました"
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   def destroy
+    @user = User.find(params[:id])
+    @user.destroy
+    terminate_session
+    redirect_to root_path, notice: "退会手続きが完了しました"
   end
 
   def new
@@ -33,7 +50,7 @@ class UsersController < ApplicationController
     if @user.save
       # 登録成功時：ログイン状態にしてマイページ（またはトップ）へリダイレクト
       # 会員登録が完了した直後に自動ログインさせる
-      session[:user_id] = @user.id
+      start_new_session_for @user
       redirect_to user_path(@user), notice: "会員登録が完了しました！"
     else
       # 登録失敗時：新規登録画面を再描画
@@ -56,7 +73,19 @@ class UsersController < ApplicationController
       :password,
       :password_confirmation,
       :profile_text,
+      :profile_image
     )
+  end
+
+  # 本人以外のアクセス制限用メソッド
+  # eidt, update, destroyアクションの直前に呼び出される
+  def ensure_correct_user
+    @user = User.find(params[:id])
+    # @userとCurrent.userが一致しない場合にログインユーザーのマイページへ遷移
+    #（unlessは「〜でなければ」という意味）
+    unless @user == Current.user
+      redirect_to user_path(Current.user), alert: "他人のプロフィールは編集できません"
+    end
   end
 
 end
