@@ -1,49 +1,77 @@
-<h2><%= @user == Current.user ? "マイページ" : "ユーザー詳細" %></h2>
+<div class="user-show-container">
+  <h2><%= @user == Current.user ? "マイページ" : "User Profile" %></h2>
 
-<!-- ユーザーの詳細 -->
-<div>
-
-  <h3><%= @user.name %></h3>
-
-  <% if @user.profile_image.attached? %>
-    <%= image_tag @user.profile_image.variant(resize_to_limit: [100, 100]) %>
-  <% else %>
-    <%= image_tag 'logo.png', size: '100x100' %>
-  <% end %>
-
-  <!-- ログイン済み、かつ、ログイン中のユーザー本人である場合のみ表示 -->
-  <% if authenticated? && @user == Current.user %>
-    <p><%= link_to "プロフィール編集", edit_user_path(@user) %></p>
-  <% end %>
-
-</div>
-
-<!-- ユーザーの投稿一覧 -->
-
-<% @posts.each do |post| %>
-  <div class="post-card">
-      <!-- 1. 商品画像 画像押下で詳細画面へ -->
-      <div>
-        <%= link_to post_path(post) do %>
-          <%= image_tag post.image if post.image.attached? %>
-        <% end %>
-      </div>
-
-      <!-- 2. 商品名 -->
-      <h2><%= post.product_name %></h2>
-
-      <!-- 3. 評価・4. 価格 -->
-      <p>評価: ★<%= post.rating %></p>
-      <p>価格: ¥<%= post.price %></p>
-
-      <!-- 5. 持ち歩き時間・6. エリア -->
-      <p>持ち歩き可能時間: <%= post.carrying_time %>時間</p>
-      <p>エリア: <%= post.area %></p>
-
-      <!-- 7. 投稿者 -->
-      <p>投稿者: <%= post.user.user_name %></p>
-
-      <!-- 詳細ページへのリンク -->
-      <%= link_to "詳細を見る", post_path(post) %>
+  <!-- ユーザープロフィールカード -->
+  <div class="profile-card">
+    <div class="profile-avatar">
+      <% if @user.profile_image.attached? %>
+        <%= image_tag @user.profile_image.variant(resize_to_limit: [100, 100]), class: "avatar-img" %>
+      <% else %>
+        <%= image_tag 'logo.png', class: "avatar-img" %>
+      <% end %>
     </div>
-<% end %>
+
+    <div class="profile-info">
+      <h3 class="user-name"><%= @user.name %></h3>
+
+      <% if authenticated? && @user == Current.user %>
+        <p class="edit-link">
+          <%= link_to "プロフィールを編集する", edit_user_path(@user), class: "btn-edit-profile" %>
+        </p>
+      <% end %>
+    </div>
+  </div>
+
+  <h3 class="section-title">投稿一覧</h3>
+
+  <!-- ユーザーの投稿一覧（トップページ同様のグリッド配置） -->
+  <div class="posts-grid">
+    <% @posts.each do |post| %>
+      <div class="post-card">
+        <!-- 商品画像 -->
+        <div class="post-image-wrapper">
+          <%= link_to post_path(post) do %>
+            <% if post.image.attached? %>
+              <%= image_tag post.image, class: "post-thumb" %>
+            <% else %>
+              <div class="no-image">No Image</div>
+            <% end %>
+          <% end %>
+        </div>
+
+        <!-- カード本文 -->
+        <div class="post-card-body">
+          <h4 class="product-name"><%= link_to post.product_name, post_path(post) %></h4>
+
+          <!-- 評価 & 価格 -->
+          <div class="price-rating">
+            <span class="rating">★ <%= post.rating || 0 %></span>
+            <span class="price">¥<%= number_with_delimiter(post.price) %></span>
+          </div>
+
+          <!-- 持ち歩き時間 & エリア -->
+          <div class="post-meta">
+            <p>
+              ⏱️ 
+              <% if post.carrying_time == "free" %>
+                常温OK
+              <% elsif post.carrying_time.present? %>
+                <%= post.carrying_time %>時間
+              <% else %>
+                未設定
+              <% end %>
+            </p>
+            <p>📍 <%= post.area.presence || "未設定" %></p>
+          </div>
+
+          <!-- 詳細ボタン -->
+          <%= link_to "詳細を見る", post_path(post), class: "btn-detail" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="user-show-footer">
+    <%= link_to "← トップページへ戻る", posts_path %>
+  </div>
+</div>

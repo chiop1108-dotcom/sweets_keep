@@ -1,73 +1,66 @@
-<h2>サインアップ</h2>
+<div class="signup-container">
+  <h2>Sign up</h2>
 
-<%= form_with model: @user, url: users_path do |f| %>
   <% if @user.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+      <h2><%= @user.errors.count %>件のエラーが発生しました:</h2>
       <ul>
-        <% @user.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
+        <% @user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
-  
-  <!-- 名前（氏名） -->
-  <div class="field">
-    <%= f.label :name, "名前" %><br>
-    <%= f.text_field :name, autofocus: true %>
-  </div>
 
-  <!-- フリガナ -->
-  <div class="field"> 
-    <%= f.label :name_kana, "フリガナ" %><br> 
-    <%= f.text_field :name_kana %> 
-  </div>
+  <%= form_with model: @user, url: users_path, class: "signup-form" do |f| %>
+    <!-- 名前（氏名） -->
+    <div class="field">
+      <%= f.label :name, "名前" %><br>
+      <%= f.text_field :name, autofocus: true %>
+    </div>
 
-  <!-- ユーザー名 -->
-  <div class="field"> 
-    <%= f.label :user_name, "ユーザー名" %><br> 
-    <%= f.text_field :user_name %> 
-  </div>
+    <!-- フリガナ -->
+    <div class="field"> 
+      <%= f.label :name_kana, "フリガナ" %><br> 
+      <%= f.text_field :name_kana %> 
+    </div>
 
-  <!-- メールアドレス -->
-  <div class="field">
-    <%= f.label :email_address, "メールアドレス" %><br>
-    <%= f.email_field :email_address %>
-  </div>
+    <!-- ユーザー名 -->
+    <div class="field"> 
+      <%= f.label :user_name, "ユーザー名" %><br> 
+      <%= f.text_field :user_name %> 
+    </div>
 
-  <!-- 電話番号 -->
-  <div class="field"> 
-    <%= f.label :telephone_number, "電話番号" %><br> 
-    <%= f.telephone_field :telephone_number %> 
-  </div>
+    <!-- メールアドレス -->
+    <div class="field">
+      <%= f.label :email_address, "メールアドレス" %><br>
+      <%= f.email_field :email_address %>
+    </div>
 
-  <!-- パスワード -->
-  <div class="field">
-    <%= f.label :password, "パスワード(6字以上)" %><br>
-    <%= f.password_field :password %>
-  </div>
+    <!-- 電話番号 -->
+    <div class="field"> 
+      <%= f.label :telephone_number, "電話番号" %><br> 
+      <%= f.telephone_field :telephone_number %> 
+    </div>
 
-  <!-- パスワード確認用 -->
-  <div class="field">
-    <%= f.label :password_confirmation, "パスワード(確認用)" %><br>
-    <%= f.password_field :password_confirmation %>
-  </div>
+    <!-- パスワード -->
+    <div class="field">
+      <%= f.label :password, "パスワード(6字以上)" %><br>
+      <%= f.password_field :password %>
+    </div>
 
-  <div class="actions">
-    <%= f.submit "サインアップ" %>
-  </div>
-<% end %>
+    <!-- パスワード確認用 -->
+    <div class="field">
+      <%= f.label :password_confirmation, "パスワード(確認用)" %><br>
+      <%= f.password_field :password_confirmation %>
+    </div>
 
-<%= link_to "ログインはこちら", new_session_path %>
+    <div class="actions">
+      <%= f.submit "サインアップ" %>
+    </div>
+  <% end %>
 
-<% if @user.errors.any? %>
-  <div id="error_explanation">
-    <h2><%= @user.errors.count %>件のエラーが発生しました:</h2>
-    <ul>
-      <% @user.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-    </ul>
+  <div class="signup-footer">
+    <%= link_to "ログインはこちら", new_session_path %>
   </div>
-<% end %>
+</div>

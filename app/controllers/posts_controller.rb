@@ -11,8 +11,40 @@ class PostsController < ApplicationController
   end
 
   def index
-    # 新しい投稿順にすべて取得
+    # ベース：新しい投稿順にすべて取得
     @posts = Post.all.order(created_at: :desc)
+
+    # キーワード検索
+
+    # キーワード検索（商品名 OR エリア OR 店名 OR 投稿者名）
+    if params[:keyword].present?
+      kw = "%#{params[:keyword]}%"
+      # joins(:user) を使うことで、関連するユーザーテーブルの user_name も検索対象にできる
+      @posts = @posts.joins(:user).where(
+        "posts.product_name LIKE ? OR posts.area LIKE ? OR posts.shop_name LIKE ? OR users.user_name LIKE ?", 
+        kw, kw, kw, kw
+      )
+    end
+
+    # ジャンル（genre）が指定されている場合、そのジャンルで絞り込む
+    if params[:genre].present?
+      @posts = @posts.where(genre: params[:genre])
+    end
+
+    # 持ち歩き時間（指定した時間「以下」 または 「常温OK」）
+    if params[:carrying_time].present?
+      if params[:carrying_time] == "free"
+        @posts = @posts.where(carrying_time: "free")
+      else
+        @posts = @posts.where("carrying_time <= ?", params[:carrying_time])
+      end
+    end
+
+    # 賞味期限（指定した日数「以上」）
+    if params[:shelf_life].present?
+      @posts = @posts.where("shelf_life >= ?", params[:shelf_life])
+    end
+
   end
 
   def show
@@ -72,6 +104,7 @@ class PostsController < ApplicationController
       :shelf_life,
       :area,
       :price,
+      :genre,
       :image # ActiveStorageの画像
     )
   end

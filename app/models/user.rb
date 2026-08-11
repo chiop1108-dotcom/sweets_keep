@@ -39,4 +39,18 @@ class User < ApplicationRecord
     profile_image.variant(resize_to_limit: [width, height]).processed
   end
   
+  # enum 定義
+  # 管理者側機能の実装時に有効にする
+  # enum :role, {
+  #   user: 0, # ユーザー
+  #   admin: 1, # 管理者
+  # }, prefix: true
+
+  # 管理者側機能の実装時に有効にする
+  # app/views/layouts/application.html.erbに記入
+  # admin_root_pathも未作成なので、作成も行うこと
+  # <% if Current.user&.role_admin? %>
+  #   <li><%= link_to "Admin", admin_root_path %></li>
+  # <% end %>
+
 end

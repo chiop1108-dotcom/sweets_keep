@@ -5,10 +5,3 @@ class AddDetailsToPosts < ActiveRecord::Migration[8.0]
     add_column :posts, :price, :integer
   end
 end
-
-# あとでビューに書く
-# <% if post.price.present? %>
-#   <%= number_to_currency(post.price, unit: "円", format: "%n%u") %>
-# <% else %>
-#   価格不明（または未設定）
-# <% end %>

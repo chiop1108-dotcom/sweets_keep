@@ -1,31 +1,43 @@
-<h1>スイーツ投稿一覧</h1>
+<h1 class="page-title">All Posts</h1>
 
 <div class="posts-container">
   <% @posts.each do |post| %>
     <div class="post-card">
-      <!-- 1. 商品画像 画像押下で詳細画面へ -->
-      <div>
+      <!-- 1. 商品画像（押下で詳細へ） -->
+      <div class="post-image-wrapper">
         <%= link_to post_path(post) do %>
           <%= image_tag post.image if post.image.attached? %>
         <% end %>
       </div>
 
-      <!-- 2. 商品名 -->
-      <h2><%= post.product_name %></h2>
+      <div class="post-content">
+        <!-- 2. 商品名 -->
+        <h2 class="post-title"><%= post.product_name %></h2>
 
-      <!-- 3. 評価・4. 価格 -->
-      <p>評価: ★<%= post.rating %></p>
-      <p>価格: ¥<%= post.price %></p>
+        <!-- 3. 評価・4. 価格 -->
+        <div class="post-info-row">
+          <span class="post-rating">★ <%= post.rating %></span>
+          <span class="post-price">¥<%= post.price %></span>
+        </div>
 
-      <!-- 5. 持ち歩き時間・6. エリア -->
-      <p>持ち歩き可能時間: <%= post.carrying_time %>時間</p>
-      <p>エリア: <%= post.area %></p>
+        <!-- 5. 持ち歩き時間・6. エリア -->
+        <div class="post-details">
+          <% if post.carrying_time == "free" %>
+            <p>持ち歩き: 常温OK</p>
+          <% else %>
+            <p>持ち歩き: <%= post.carrying_time %>時間</p>
+          <% end %>
+          <p>エリア: <%= post.area %></p>
+        </div>
 
-      <!-- 7. 投稿者 -->
-      <p>投稿者: <%= post.user.user_name %></p>
+        <!-- 7. 投稿者 -->
+        <p class="post-user">投稿者: <%= post.user.user_name %></p>
 
-      <!-- 詳細ページへのリンク -->
-      <%= link_to "詳細を見る", post_path(post) %>
+        <!-- 詳細を見るボタン -->
+        <div class="post-action">
+          <%= link_to "詳細を見る", post_path(post), class: "btn-detail-outline" %>
+        </div>
+      </div>
     </div>
   <% end %>
 </div>

@@ -1,79 +1,12 @@
-<h1>スイーツ投稿の編集</h1>
+<div class="post-form-container">
+  <h2>Edit Post</h2>
 
-<div class="post-edit">
-  <%= form_with model: @post, local: true do |f| %>
+  <%= render 'form', post: @post %>
 
-    <!-- 1. 現在の画像プレビューと変更用フォーム -->
-    <div>
-      <% if @post.image.attached? %>
-        <p>現在の画像:</p>
-        <%= image_tag @post.image, size: "200x200" %>
-      <% end %>
-      <div>
-        <%= f.label :image, "画像を変更" %>
-        <%= f.file_field :image %>
-      </div>
-    </div>
-
-    <!-- 2. 商品名・ショップ名 -->
-    <div>
-      <%= f.label :product_name, "商品名" %>
-      <%= f.text_field :product_name %>
-    </div>
-
-    <div>
-      <%= f.label :shop_name, "ショップ名" %>
-      <%= f.text_field :shop_name %>
-    </div>
-
-    <!-- 3. 評価・4. 価格 -->
-    <div>
-      <%= f.label :rating, "評価 (1〜5)" %>
-      <%= f.number_field :rating, in: 1..5, step: 1 %>
-    </div>
-
-    <div>
-      <%= f.label :price, "価格 (円)" %>
-      <%= f.number_field :price %>
-    </div>
-
-    <!-- 5. 補足情報 -->
-    <div>
-      <%= f.label :starage_temperature, "保存温度" %>
-      <%= f.text_field :starage_temperature %>
-    </div>
-
-    <div>
-      <%= f.label :carrying_time, "持ち歩き可能時間 (時間)" %>
-      <%= f.number_field :carrying_time %>
-    </div>
-
-    <div>
-      <%= f.label :shelf_life, "賞味期限 (日)" %>
-      <%= f.number_field :shelf_life %>
-    </div>
-
-    <div>
-      <%= f.label :area, "エリア" %>
-      <%= f.text_field :area %>
-    </div>
-
-    <!-- 6. 説明文 -->
-    <div>
-      <%= f.label :description, "説明文" %>
-      <%= f.text_area :description %>
-    </div>
-
-    <!-- 更新ボタン -->
-    <div>
-      <%= f.submit "更新する" %>
-    </div>
-
-  <% end %>
-
-  <!-- リンク一覧 -->
-  <div>
-    <%= link_to "詳細に戻る", post_path(@post) %> |
+  <!-- フッターのリンク一覧 -->
+  <div class="post-form-footer">
+    <%= link_to "詳細に戻る", post_path(@post) %>
+    <span class="divider">|</span>
     <%= link_to "一覧に戻る", posts_path %>
   </div>
 </div>

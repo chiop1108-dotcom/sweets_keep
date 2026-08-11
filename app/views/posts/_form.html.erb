@@ -1,0 +1,117 @@
+<%= form_with model: post, class: "post-form-card" do |f| %>
+  <div class="posts-new">
+    <!-- 商品画像 -->
+    <div class="field">
+      <%= f.label :image, "商品画像" %>
+      <div class="file-input-wrapper">
+        <%= f.file_field :image, accept: "image/*", class: "form-control-file" %>
+      </div>
+    </div>
+
+    <!-- 商品名 -->
+    <div class="field">
+      <%= f.label :product_name, "商品名" %>
+      <%= f.text_field :product_name, placeholder: "例: 苺のショートケーキ", class: "form-control" %>
+    </div>
+
+    <!-- 店名 -->
+    <div class="field">
+      <%= f.label :shop_name, "店名" %>
+      <%= f.text_field :shop_name, placeholder: "例: パティスリー〇〇", class: "form-control" %>
+    </div>
+
+    <!-- 価格 -->
+    <div class="field">
+      <%= f.label :price, "価格（円）" %>
+      <%= f.number_field :price, placeholder: "例: 500", class: "form-control" %>
+    </div>
+
+    <!-- ジャンル -->
+    <div class="field">
+      <%= f.label :genre, "ジャンル" %>
+      <%= f.select :genre, ["洋菓子", "和菓子", "和洋菓子", "その他"], { include_blank: "選択してください" }, { class: "form-control-select" } %>
+    </div>
+
+    <!-- 評価（星タップ入力） -->
+    <div class="field">
+      <%= f.label :rating, "評価（最高☆5）" %>
+      <%= f.hidden_field :rating, id: "rating-input", value: post.rating || 0 %>
+
+      <div class="star-rating" id="star-rating">
+        <span class="star" data-value="1">★</span>
+        <span class="star" data-value="2">★</span>
+        <span class="star" data-value="3">★</span>
+        <span class="star" data-value="4">★</span>
+        <span class="star" data-value="5">★</span>
+      </div>
+    </div>
+
+    <!-- エリア・住所 -->
+    <div class="field">
+      <%= f.label :area, "エリア・地域" %>
+      <%= f.text_field :area, placeholder: "例: 東京都渋谷区...", class: "form-control" %>
+    </div>
+
+    <!-- 保存方法 -->
+    <div class="field">
+      <%= f.label :starage_temperature, "保存温度" %>
+      <%= f.select :preservation_method, ["常温", "冷暗所", "冷蔵", "冷凍"], { include_blank: "選択してください" }, { class: "form-control-select" } %>
+    </div>
+
+    <!-- 持ち歩き時間 -->
+    <div class="field">
+      <%= f.label :carrying_time, "持ち歩き可能時間" %>
+      <%= f.select :carrying_time, [["1時間以内", "1"], ["2時間以内", "2"], ["3時間以内", "3"], ["常温OK（制限なし）", "free"]], { include_blank: "選択してください" }, { class: "form-control-select" } %>
+    </div>
+
+    <!-- 日持ち・賞味期限 -->
+    <div class="field">
+      <%= f.label :shelf_life, "日持ち（目安）" %>
+      <%= f.select :shelf_life, [["1日", 1], ["3日以内", 3], ["1週間以上", 7], ["2週間以上", 14], ["1ヶ月以上", 30]], { include_blank: "選択してください" }, { class: "form-control-select" } %>
+    </div>
+
+    <!-- 説明・詳細 -->
+    <div class="field">
+      <%= f.label :description, "説明・詳細" %>
+      <%= f.text_area :description, placeholder: "味の感想やおすすめポイントなどを入力してください", class: "form-control-textarea" %>
+    </div>
+
+    <!-- 送信ボタン -->
+    <div class="actions">
+      <%= f.submit post.persisted? ? "更新する" : "投稿する", class: "btn-submit" %>
+    </div>
+  </div>
+<% end %>
+
+<script>
+  document.addEventListener("turbo:load", function() {
+    const stars = document.querySelectorAll("#star-rating .star");
+    const ratingInput = document.getElementById("rating-input");
+
+    if (!ratingInput) return;
+
+    function updateStars(value) {
+      stars.forEach(star => {
+        const starValue = parseInt(star.getAttribute("data-value"));
+        if (starValue <= value) {
+          star.classList.add("active");
+        } else {
+          star.classList.remove("active");
+        }
+      });
+    }
+
+    const currentRating = parseInt(ratingInput.value);
+    if (currentRating > 0) {
+      updateStars(currentRating);
+    }
+
+    stars.forEach(star => {
+      star.addEventListener("click", function() {
+        const selectedValue = this.getAttribute("data-value");
+        ratingInput.value = selectedValue;
+        updateStars(selectedValue);
+      });
+    });
+  });
+</script>

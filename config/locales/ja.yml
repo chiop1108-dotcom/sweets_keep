@@ -1,0 +1,10 @@
+ja:
+  activerecord:
+    attributes:
+      post:
+        starage_temperature: "保存温度"
+        starage_temperatures:
+          room_temperature: "常温"
+          cool_dark_place: "冷暗所"
+          refrigerated: "冷蔵"
+          frozen: "冷凍"

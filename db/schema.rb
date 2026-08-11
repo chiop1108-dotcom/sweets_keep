@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_08_08_185726) do
+ActiveRecord::Schema[8.0].define(version: 2026_08_10_171701) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -76,10 +76,11 @@ ActiveRecord::Schema[8.0].define(version: 2026_08_08_185726) do
     t.integer "starage_temperature", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "shelf_life"
-    t.string "area"
-    t.integer "price"
-    t.integer "carrying_time"
+    t.integer "shelf_life", null: false
+    t.string "area", null: false
+    t.integer "price", null: false
+    t.string "carrying_time", null: false
+    t.string "genre", default: "その他", null: false
     t.index ["rating"], name: "index_posts_on_rating"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
