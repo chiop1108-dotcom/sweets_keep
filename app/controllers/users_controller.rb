@@ -34,7 +34,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @user.destroy
     terminate_session
-    redirect_to root_path, notice: "退会手続きが完了しました"
+    redirect_to new_user_path, notice: "退会手続きが完了しました"
   end
 
   def new

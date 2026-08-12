@@ -76,10 +76,17 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
   end
 
-   def update
+  def update
     post = Post.find(params[:id])
-    post.update(post_params)
-    redirect_to post_path(post.id), notice: "投稿を編集しました"
+    if post.update(post_params)
+      redirect_to post_path(post.id), notice: "投稿を編集しました"
+    else
+      # エラーが出て、原因が不明なのでredirectにしてあります。
+      # flash.now[:alert] = "更新できませんでした"
+      # バリデーションエラー時は編集画面（edit）を再描画する
+      # render :edit, status: :unprocessable_entity, locals: { post: post }
+      redirect_to edit_post_path(post.id), alert: "更新できませんでした"
+    end
   end
 
   def destroy

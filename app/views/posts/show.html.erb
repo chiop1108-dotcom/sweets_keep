@@ -95,6 +95,7 @@
       <% if @post.user == Current.user %>
         <div class="action-buttons">
           <%= link_to "編集する", edit_post_path(@post), class: "btn-edit" %>
+          <!-- アラートダイアログ -->
           <%= link_to "削除する", post_path(@post), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, class: "btn-delete" %>
         </div>
       <% end %>
