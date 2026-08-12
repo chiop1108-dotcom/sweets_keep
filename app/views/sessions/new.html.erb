@@ -1,15 +1,8 @@
 <div class="login-container">
   <h2>Log in</h2>
 
-  <!-- flashメッセージ -->
-  <% if flash[:alert] %>
-    <div class="flash-message flash-alert"><%= flash[:alert] %></div>
-  <% end %>
-  <% if flash[:notice] %>
-    <div class="flash-message flash-notice"><%= flash[:notice] %></div>
-  <% end %>
-
   <%= form_with url: session_path, class: "login-form" do |form| %>
+    
     <!-- メールアドレス -->
     <div class="field">
       <%= form.label :email_address, "メールアドレス" %><br>

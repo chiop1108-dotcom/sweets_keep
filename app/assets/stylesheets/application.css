@@ -9,6 +9,23 @@
  * Consider organizing styles into separate files for maintainability.
  */
 
+ /* メッセージ表示 */
+ /* 成功（Notice）は緑色系 */
+.flash-notice {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+/* エラー（Alert）は赤色系 */
+.flash-alert {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 10px;
+  border-radius: 4px;
+}
+
  /* ヘッダー */
 /* --- ヘッダー全体のレイアウト調整 --- */
 header {

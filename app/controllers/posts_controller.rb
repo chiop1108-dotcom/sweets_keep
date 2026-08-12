@@ -62,10 +62,11 @@ class PostsController < ApplicationController
     # @post = Current.user.posts.build(post_params)は@post = Post.new(post_params)と@post.user_id = Current.user.idをまとめた書き方
 
     if @post.save
-      # 保存成功：投稿詳細画面へリダイレクト
+      # 保存成功：投稿一覧画面へリダイレクト
       redirect_to posts_path, notice: "投稿を作成しました"
     else
       # 保存失敗：入力内容を保持したまま新規作成画面（new.html.erb）を再描画
+      flash.now[:alert] = "未入力の項目があります"
       render :new, status: :unprocessable_entity
     end
   end
@@ -78,7 +79,7 @@ class PostsController < ApplicationController
    def update
     post = Post.find(params[:id])
     post.update(post_params)
-    redirect_to post_path(post.id)  
+    redirect_to post_path(post.id), notice: "投稿を編集しました"
   end
 
   def destroy

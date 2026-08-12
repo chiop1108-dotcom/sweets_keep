@@ -12,6 +12,10 @@
     <% end %>
   </div>
 
+  <div class="top-index-action">
+    <%= link_to "投稿一覧を見る", posts_path, class: "btn-detail-outline" %>
+  </div>
+
   <div class="top-new-posts">
     <h3>New Post</h3>
     <% @new_posts.each do |post| %>
@@ -21,10 +25,6 @@
         <%= link_to "詳細を見る", post_path(post), class: "btn-detail" %>
       </div>
     <% end %>
-  </div>
-
-  <div class="top-index-action">
-    <%= link_to "投稿一覧を見る", posts_path, class: "btn-detail-outline" %>
   </div>
 
   <div class="top-genre-links filter-group">
