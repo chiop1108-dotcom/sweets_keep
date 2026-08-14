@@ -14,15 +14,21 @@ class PostsController < ApplicationController
     # ベース：新しい投稿順にすべて取得
     @posts = Post.all.order(created_at: :desc)
 
-    # キーワード検索
-
-    # キーワード検索（商品名 OR エリア OR 店名 OR 投稿者名）
+    # キーワード検索（商品名 OR エリア OR 店名 OR 持ち歩き可能時間 OR 日持ち OR ジャンル OR 紹介文 OR 投稿者名）
     if params[:keyword].present?
       kw = "%#{params[:keyword]}%"
       # joins(:user) を使うことで、関連するユーザーテーブルの user_name も検索対象にできる
       @posts = @posts.joins(:user).where(
-        "posts.product_name LIKE ? OR posts.area LIKE ? OR posts.shop_name LIKE ? OR users.user_name LIKE ?", 
-        kw, kw, kw, kw
+        "posts.product_name LIKE ? OR " \
+        "posts.area LIKE ? OR " \
+        "posts.shop_name LIKE ? OR " \
+        "users.user_name LIKE ?", 
+        # "posts.carry_time LIKE ? OR " \
+        # "posts.shelf_life LIKE ? OR " \
+        # "posts.genre LIKE ? OR " \
+        # "posts.description LIKE ? OR " \
+        kw, kw, kw, kw, 
+        # kw, kw, kw, kw
       )
     end
 
