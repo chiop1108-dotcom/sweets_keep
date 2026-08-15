@@ -81,10 +81,10 @@
       <%= f.submit post.persisted? ? "更新する" : "投稿する", class: "btn-submit" %>
     </div>
   </div>
-<% end %>
-
 <script>
-  document.addEventListener("turbo:load", function() {
+//  document.addEventListener("turbo:load", function() {
+function rating(){
+    console.log("turbo:load");
     const stars = document.querySelectorAll("#star-rating .star");
     const ratingInput = document.getElementById("rating-input");
 
@@ -113,5 +113,9 @@
         updateStars(selectedValue);
       });
     });
-  });
+ // });
+  }
+  rating();
+
 </script>
+<% end %>
