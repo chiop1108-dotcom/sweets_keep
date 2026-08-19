@@ -31,7 +31,8 @@
         </div>
 
         <!-- 7. 投稿者 -->
-        <p class="post-user">投稿者: <%= post.user.user_name %></p>
+        <!-- link_toと,user_path(post.user)を書き足すことで投稿者から他人のユーザーページへ遷移できるようにした -->
+        <p class="post-user">投稿者: <%= link_to post.user.user_name, user_path(post.user) %></p>
 
         <!-- 詳細を見るボタン -->
         <div class="post-action">
