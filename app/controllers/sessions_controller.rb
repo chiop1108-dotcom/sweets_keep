@@ -20,7 +20,7 @@ class SessionsController < ApplicationController
     # 残っているフラッシュメッセージをすべて削除する
     # flash.clear 
     
-    # または「ログアウトしました」で上書きする場合：
+    # または「ログアウトしました」で上書きする場合
     redirect_to new_session_path, notice: "ログアウトしました"
     
     # redirect_to new_session_path

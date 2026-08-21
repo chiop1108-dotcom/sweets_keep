@@ -91,15 +91,47 @@
       <!-- 投稿者 -->
       <p class="author">投稿者: <%= @post.user&.user_name %></p>
 
-      <!-- 編集・削除ボタン（投稿本人のみ） -->
-      <% if @post.user == Current.user %>
+      <!-- 編集・削除ボタンエリア -->
+      <% if @post.user == Current.user || Current.user&.role_admin? %>
         <div class="action-buttons">
-          <%= link_to "編集する", edit_post_path(@post), class: "btn-edit" %>
-          <!-- アラートダイアログ -->
-          <%= link_to "削除する", post_path(@post), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, class: "btn-delete" %>
+          <!-- 編集する（投稿本人のみ） -->
+          <% if @post.user == Current.user %>
+            <%= link_to "編集する", edit_post_path(@post), class: "btn-edit" %>
+          <% end %>
+
+          <!-- 削除する（投稿本人 OR 管理者） -->
+          <%= link_to "削除する", post_path(@post), 
+                      data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, 
+                      class: "btn-delete" %>
         </div>
       <% end %>
+      
     </div>
+  </div>
+
+  <!-- コメントエリア -->
+  <div>
+    <p>コメント件数：<%= @post.comments.count %></p>
+    <% @post.comments.each do |comment| %>
+      <p><%= image_tag comment.user.get_profile_image(100,100) %></p>
+      <%= comment.user.name %>
+      <%= comment.created_at.strftime('%Y/%m/%d') %>
+      <%= comment.content %>
+
+      <!-- コメント削除：作成者本人 OR 管理者 -->
+      <% if comment.user == Current.user || Current.user&.role_admin? %>
+        <%= link_to "削除", post_comment_path(@post, comment), 
+                    data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" } %>
+      <% end %>
+
+    <% end %>
+  </div>
+
+  <div>
+    <%= form_with model: [@post, @comment] do |f| %>
+      <%= f.text_area :content, rows: '5', placeholder: "コメントをここに" %>
+      <%= f.submit "送信する" %>
+    <% end %>
   </div>
 
   <!-- 戻るリンク -->

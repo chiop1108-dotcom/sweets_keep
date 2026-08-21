@@ -43,13 +43,13 @@
         <div class="post-card-body">
           <h4 class="product-name"><%= link_to post.product_name, post_path(post) %></h4>
 
-          <!-- 評価 & 価格 -->
+          <!-- 評価・価格 -->
           <div class="price-rating">
             <span class="rating">★ <%= post.rating || 0 %></span>
             <span class="price">¥<%= number_with_delimiter(post.price) %></span>
           </div>
 
-          <!-- 持ち歩き時間 & エリア -->
+          <!-- 持ち歩き時間・エリア -->
           <div class="post-meta">
             <p>
               ⏱️ 
@@ -63,6 +63,9 @@
             </p>
             <p>📍 <%= post.area.presence || "未設定" %></p>
           </div>
+
+          <!-- コメント件数 -->
+          <p><%= link_to "#{post.comments.count} コメント", post_path(post) %></p>
 
           <!-- 詳細ボタン -->
           <%= link_to "詳細を見る", post_path(post), class: "btn-detail" %>

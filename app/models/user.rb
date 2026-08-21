@@ -12,7 +12,7 @@ class User < ApplicationRecord
   has_many :favorites, dependent: :destroy
 
   # DB内の「0」を general（一般ユーザー）、「1」を admin（管理者）として扱う定義
-  enum :role, { general: 0, admin: 1 }
+  enum :role, { general: 0, admin: 1 }, prefix: true
 
   # デフォルト値の設定（バリデーション実行前に動作させる）
   before_validation :set_default_role, on: :create
@@ -21,6 +21,7 @@ class User < ApplicationRecord
   validates :name, presence: true, length: { maximum: 50 }
   validates :email_address, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
+  validates :user_name, presence: true, uniqueness: true
   validates :role, presence: true, inclusion: { in: roles.keys } # "user" または "admin"しか許可しない
   
   normalizes :email_address, with: ->(e) { e.strip.downcase }
@@ -38,19 +39,5 @@ class User < ApplicationRecord
     end
     profile_image.variant(resize_to_limit: [width, height]).processed
   end
-  
-  # enum 定義
-  # 管理者側機能の実装時に有効にする
-  # enum :role, {
-  #   user: 0, # ユーザー
-  #   admin: 1, # 管理者
-  # }, prefix: true
-
-  # 管理者側機能の実装時に有効にする
-  # app/views/layouts/application.html.erbに記入
-  # admin_root_pathも未作成なので、作成も行うこと
-  # <% if Current.user&.role_admin? %>
-  #   <li><%= link_to "Admin", admin_root_path %></li>
-  # <% end %>
 
 end
