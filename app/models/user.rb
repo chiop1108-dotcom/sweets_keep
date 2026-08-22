@@ -19,7 +19,9 @@ class User < ApplicationRecord
 
   # バリデーション
   validates :name, presence: true, length: { maximum: 50 }
+  validates :name_kana, presence: true
   validates :email_address, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
+  validates :telephone_number, presence: true
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
   validates :user_name, presence: true, uniqueness: true
   validates :role, presence: true, inclusion: { in: roles.keys } # "user" または "admin"しか許可しない
