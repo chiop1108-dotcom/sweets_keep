@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_08_10_171701) do
+ActiveRecord::Schema[8.0].define(version: 2026_08_22_064758) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -40,8 +40,8 @@ ActiveRecord::Schema[8.0].define(version: 2026_08_10_171701) do
   end
 
   create_table "comments", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "post_id", null: false
+    t.bigint "user_id"
+    t.bigint "post_id"
     t.text "content", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -50,8 +50,8 @@ ActiveRecord::Schema[8.0].define(version: 2026_08_10_171701) do
   end
 
   create_table "favorites", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "post_id", null: false
+    t.bigint "user_id"
+    t.bigint "post_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["post_id"], name: "index_favorites_on_post_id"
@@ -59,8 +59,8 @@ ActiveRecord::Schema[8.0].define(version: 2026_08_10_171701) do
   end
 
   create_table "post_tags", force: :cascade do |t|
-    t.integer "post_id", null: false
-    t.integer "tag_id", null: false
+    t.bigint "post_id"
+    t.bigint "tag_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["post_id"], name: "index_post_tags_on_post_id"
@@ -68,7 +68,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_08_10_171701) do
   end
 
   create_table "posts", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.bigint "user_id"
     t.string "product_name", null: false
     t.string "shop_name", null: false
     t.text "description", null: false
@@ -86,7 +86,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_08_10_171701) do
   end
 
   create_table "sessions", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.bigint "user_id"
     t.string "ip_address"
     t.string "user_agent"
     t.datetime "created_at", null: false
