@@ -1,0 +1,141 @@
+<div class="post-detail-container">
+  <h2>Post Details</h2>
+
+  <div class="post-detail-card">
+    <!-- 商品画像 -->
+    <div class="post-image-wrapper">
+      <% if @post.image.attached? %>
+        <%= image_tag @post.image, class: "post-detail-image" %>
+      <% else %>
+        <div class="no-image">画像はありません</div>
+      <% end %>
+    </div>
+
+    <div class="post-detail-content">
+      <!-- メイン情報（商品名・ショップ名・ジャンル） -->
+      <h1 class="product-name"><%= @post.product_name %></h1>
+      
+      <div class="meta-info">
+        <span class="shop-name">🏪 <%= @post.shop_name %></span>
+        <span class="genre">🏷️ <%= @post.genre %></span>
+      </div>
+
+      <!-- 評価・価格 -->
+      <div class="price-rating-box">
+        <div class="rating">
+          <% rating = @post.rating.to_f.round %>
+          <% 5.times do |i| %>
+            <span style="color: <%= i < rating ? '#ffb400' : '#e0e0e0' %>;">★</span>
+          <% end %>
+          <span class="rating-num">(<%= @post.rating || 0 %>)</span>
+        </div>
+        <p class="price">¥<%= number_with_delimiter(@post.price) %></p>
+      </div>
+
+      <!-- 補足情報リスト -->
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="info-label">保存温度</span>
+          <span class="info-value"><%= @post.starage_temperature.presence || "未設定" %></span>
+        </div>
+
+        <div class="info-item">
+          <span class="info-label">持ち歩き可能時間</span>
+          <span class="info-value">
+            <% if @post.carrying_time == "free" %>
+              常温OK（制限なし）
+            <% elsif @post.carrying_time.present? %>
+              <%= @post.carrying_time %>時間以内
+            <% else %>
+              未設定
+            <% end %>
+          </span>
+        </div>
+
+        <div class="info-item">
+          <span class="info-label">日持ち（目安）</span>
+          <span class="info-value">
+            <% case @post.shelf_life %>
+            <% when 1 %>
+              1日
+            <% when 3 %>
+              3日以内
+            <% when 7 %>
+              1週間以上
+            <% when 14 %>
+              2週間以上
+            <% when 30 %>
+              1ヶ月以上
+            <% else %>
+              <%= @post.shelf_life.present? ? "#{@post.shelf_life}日" : "未設定" %>
+            <% end %>
+          </span>
+        </div>
+
+        <div class="info-item">
+          <span class="info-label">エリア</span>
+          <span class="info-value"><%= @post.area.presence || "未設定" %></span>
+        </div>
+      </div>
+
+      <!-- 説明文 -->
+      <% if @post.description.present? %>
+        <div class="description-box">
+          <span class="info-label">商品説明・コメント</span>
+          <div class="description-text">
+            <%= simple_format(@post.description) %>
+          </div>
+        </div>
+      <% end %>
+
+      <!-- 投稿者 -->
+      <p class="author">投稿者: <%= @post.user&.user_name %></p>
+
+      <!-- 編集・削除ボタンエリア -->
+      <% if @post.user == Current.user || Current.user&.role_admin? %>
+        <div class="action-buttons">
+          <!-- 編集する（投稿本人のみ） -->
+          <% if @post.user == Current.user %>
+            <%= link_to "編集する", edit_post_path(@post), class: "btn-edit" %>
+          <% end %>
+
+          <!-- 削除する（投稿本人 OR 管理者） -->
+          <%= link_to "削除する", post_path(@post), 
+                      data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, 
+                      class: "btn-delete" %>
+        </div>
+      <% end %>
+      
+    </div>
+  </div>
+
+  <!-- コメントエリア -->
+  <div>
+    <p>コメント件数：<%= @post.comments.count %></p>
+    <% @post.comments.each do |comment| %>
+      <p><%= image_tag comment.user.get_profile_image(100,100) %></p>
+      <%= comment.user.name %>
+      <%= comment.created_at.strftime('%Y/%m/%d') %>
+      <%= comment.content %>
+
+      <!-- コメント削除：作成者本人 OR 管理者 -->
+      <% if comment.user == Current.user || Current.user&.role_admin? %>
+        <%= link_to "削除", post_comment_path(@post, comment), 
+                    data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" } %>
+      <% end %>
+
+    <% end %>
+  </div>
+
+  <div>
+    <%= form_with model: [@post, @comment] do |f| %>
+      <%= f.text_area :content, rows: '5', placeholder: "コメントをここに" %>
+      <%= f.submit "送信する" %>
+    <% end %>
+  </div>
+
+  <!-- 戻るリンク -->
+  <div class="post-detail-footer">
+    <%= link_to "← 投稿一覧へ戻る", posts_path %>
+  </div>
+</div>

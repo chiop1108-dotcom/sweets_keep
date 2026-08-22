@@ -23,6 +23,56 @@
   </head>
 
   <body>
+    <header>
+      <nav class="header-nav">
+        <ul class="header-menu-left">
+          <% if authenticated? %>
+            <!-- ログイン後 -->
+            <li><%= link_to "Post", new_post_path, class: "header-menu-left-btn" %></li> <!-- 投稿用パスを指定 -->
+            <li><%= link_to "My page", user_path(Current.user), class: "header-menu-left-btn" %></li> <!-- マイページ用パスを指定 -->
+            <li><%= link_to "Log out", session_path, data: { turbo_method: :delete }, class: "header-menu-left-btn" %></li>
+
+            <!-- 管理者側機能実装時にここに記入 -->
+            <% if Current.user&.role_admin? %>
+              <li><%= link_to "Admin", admin_root_path %></li>
+            <% end %>
+
+            
+          <% else %>
+            <!-- ログイン前 -->
+            <li><%= link_to "About", about_path, class: "header-menu-left-btn" %></li> <!-- About用パスを指定 -->
+            <li><%= link_to "Sign up", new_user_path, class: "header-menu-left-btn" %></li>
+            <li><%= link_to "Log in", new_session_path, class: "header-menu-left-btn" %></li>
+          <% end %>
+        </ul>
+
+        <h1 class="header-title"><%= link_to "Sweets Keep", root_path %></h1>
+
+        <div class="header-menu-right">
+          <!-- 共通：Top -->
+          <%= link_to "Top", root_path, class: "header-menu-right-btn" %>
+
+          <!-- 共通：検索バー -->
+          <div class="header-search-bar">
+            <%= form_with url: posts_path, method: :get do |f| %>
+              <%= f.text_field :keyword, placeholder: "検索..." %>
+              <%= f.submit "検索" %>
+            <% end %>
+          </div>
+        </div>
+        
+      </nav>
+    </header>
+
+    <!-- メッセージ表示 -->
+    <% if flash[:notice] %>
+      <div class="flash-message flash-notice"><%= flash[:notice] %></div>
+    <% end %>
+
+    <% if flash[:alert] %>
+      <div class="flash-message flash-alert"><%= flash[:alert] %></div>
+    <% end %>
+
     <%= yield %>
   </body>
 </html>

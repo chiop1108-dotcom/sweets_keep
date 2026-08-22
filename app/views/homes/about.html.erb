@@ -1,0 +1,29 @@
+<div class="about-container">
+
+  <!-- 検索バー -->
+  <div class="about-search-bar">
+    <%= form_with url: search_path, method: :get do |f| %>
+      <%= f.text_field :query, placeholder: "検索..." %>
+      <%= f.submit "検索" %>
+    <% end %>
+  </div>
+
+  <div class="hero-bg" style="background-image: url('<%= asset_path('dorayaki_chantilly.jpg') %>');">
+    
+    <div class="hero-inner">
+      <!-- タイトル部分（左右に分ける） -->
+      <div class="about-title-group">
+        <h1 class="about-title-left">Sweets Keepは毎日使える、</h1>
+        <h1 class="about-title-right">お菓子の検索サイトです。</h1>
+      </div>
+
+      <h2 class="about-subtitle">こういった時に、あなたの役に立ちます。</h2>
+
+        <p class="about-text">お手土産やお土産選びの時</p>
+        <p class="about-text">食べ歩きや趣味でお菓子を近くで買いたい時</p>
+        <p class="about-text">美味しくて甘いものを探したい時</p>
+    </div>
+    
+  </div>
+
+</div>

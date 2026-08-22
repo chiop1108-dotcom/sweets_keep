@@ -1,0 +1,47 @@
+<h1 class="page-title">All Posts</h1>
+
+<div class="posts-container">
+  <% @posts.each do |post| %>
+    <div class="post-card">
+      <!-- 商品画像（押下で詳細へ） -->
+      <div class="post-image-wrapper">
+        <%= link_to post_path(post) do %>
+          <%= image_tag post.image if post.image.attached? %>
+        <% end %>
+      </div>
+
+      <div class="post-content">
+        <!-- 商品名 -->
+        <h2 class="post-title"><%= post.product_name %></h2>
+
+        <!-- 評価・価格 -->
+        <div class="post-info-row">
+          <span class="post-rating">★ <%= post.rating %></span>
+          <span class="post-price">¥<%= post.price %></span>
+        </div>
+
+        <!-- 持ち歩き時間・エリア -->
+        <div class="post-details">
+          <% if post.carrying_time == "free" %>
+            <p>持ち歩き: 常温OK</p>
+          <% else %>
+            <p>持ち歩き: <%= post.carrying_time %>時間</p>
+          <% end %>
+          <p>エリア: <%= post.area %></p>
+        </div>
+
+        <!-- コメント件数 -->
+        <p><%= link_to "#{post.comments.count} コメント", post_path(post) %></p>
+
+        <!-- 投稿者 -->
+        <!-- link_toと,user_path(post.user)を書き足すことで投稿者から他人のユーザーページへ遷移できるようにした -->
+        <p class="post-user">投稿者: <%= link_to post.user.user_name, user_path(post.user) %></p>
+
+        <!-- 詳細を見るボタン -->
+        <div class="post-action">
+          <%= link_to "詳細を見る", post_path(post), class: "btn-detail-outline" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,19 @@
+<div class="unsubscribe-container">
+  <h2>退会手続き</h2>
+
+  <div class="unsubscribe-card">
+    <div class="warning-icon">⚠️</div>
+    <h3 class="warning-title">本当に退会しますか？</h3>
+    <p class="warning-text">
+      退会すると、これまでの投稿データやアカウント情報はすべて削除され、復元することはできません。
+    </p>
+
+    <div class="unsubscribe-actions">
+      <!-- 退会実行ボタン（警告色のテラコッタ） -->
+      <%= link_to "はい（退会する）", user_path(@user), data: { turbo_method: :delete }, class: "btn-confirm-delete" %>
+
+      <!-- キャンセルボタン（やわらかいベージュ） -->
+      <%= link_to "いいえ（マイページへ戻る）", user_path(@user), class: "btn-cancel" %>
+    </div>
+  </div>
+</div>

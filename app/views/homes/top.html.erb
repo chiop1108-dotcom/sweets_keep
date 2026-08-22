@@ -1,0 +1,73 @@
+<div class="top-container">
+
+  <h2 class="top-title">
+    手土産選びを解決！<br>
+    持ち歩き時間やエリアから探せるレビューサイト
+  </h2>
+
+  <div class="top-search-bar">
+    <%= form_with url: posts_path, method: :get do |f| %>
+      <%= f.text_field :keyword, placeholder: "検索..." %>
+      <%= f.submit "検索" %>
+    <% end %>
+  </div>
+
+  <div class="top-index-action">
+    <%= link_to "投稿一覧を見る", posts_path, class: "btn-detail-outline" %>
+  </div>
+
+  <div class="top-new-posts">
+    <h3>New Post</h3>
+    <% @new_posts.each do |post| %>
+      <div class="top-post">
+        <%= image_tag post.image if post.image.attached? %>
+        <h4><%= post.product_name %></h4>
+        <%= link_to "詳細を見る", post_path(post), class: "btn-detail" %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="top-genre-links filter-group">
+    <%= link_to posts_path(genre: "洋菓子"), class: "btn btn-genre" do %>
+      <div class="btn-image-wrapper">
+        <%= image_tag "sweets_keep_yougashi.png", class: "btn-icon" %>
+      </div>
+      <span>洋菓子</span>
+    <% end %>
+
+    <%= link_to posts_path(genre: "和菓子"), class: "btn btn-genre" do %>
+      <div class="btn-image-wrapper">
+        <%= image_tag "sweets_keep_wagashi.png", class: "btn-icon" %>
+      </div>
+      <span>和菓子</span>
+    <% end %>
+
+    <%= link_to posts_path(genre: "和洋菓子"), class: "btn btn-genre" do %>
+      <div class="btn-image-wrapper">
+        <%= image_tag "sweets_keep_wayougashi.png", class: "btn-icon" %>
+      </div>
+      <span>和洋菓子</span>
+    <% end %>
+
+    <%= link_to posts_path(genre: "その他"), class: "btn btn-genre" do %>
+      <div class="btn-image-wrapper">
+        <%= image_tag "sweets_keep_logo_bread.png", class: "btn-icon" %>
+      </div>
+      <span>その他</span>
+    <% end %>
+  </div>
+
+  <div class="top-time-links filter-group">
+    <%= link_to "1時間以内", posts_path(carrying_time: "1"), class: "btn btn-time" %>
+    <%= link_to "2時間以内", posts_path(carrying_time: "2"), class: "btn btn-time" %>
+    <%= link_to "3時間以内", posts_path(carrying_time: "3"), class: "btn btn-time" %>
+    <%= link_to "常温OK（制限なし）", posts_path(carrying_time: "free"), class: "btn btn-time" %>
+  </div>
+
+  <div class="top-shelf-life-links filter-group">
+    <%= link_to "1週間以上", posts_path(shelf_life: "7"), class: "btn btn-shelf" %>
+    <%= link_to "2週間以上", posts_path(shelf_life: "14"), class: "btn btn-shelf" %>
+    <%= link_to "3週間以上", posts_path(shelf_life: "21"), class: "btn btn-shelf" %>
+  </div>
+
+</div>

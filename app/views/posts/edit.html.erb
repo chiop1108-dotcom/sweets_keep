@@ -1,0 +1,12 @@
+<div class="post-form-container">
+  <h2>Edit Post</h2>
+
+  <%= render 'form', post: @post %>
+
+  <!-- フッターのリンク一覧 -->
+  <div class="post-form-footer">
+    <%= link_to "詳細に戻る", post_path(@post) %>
+    <span class="divider">|</span>
+    <%= link_to "一覧に戻る", posts_path %>
+  </div>
+</div>

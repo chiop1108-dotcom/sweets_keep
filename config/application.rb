@@ -23,5 +23,11 @@ module SweetsKeep
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    # デフォルトの言語を日本語に設定
+    config.i18n.default_locale = :ja
+    
+    #Solid Cacheは本番での高速キャッシュ・大規模アプリ向けの仕組みなので、不要のため設定で外す
+    config.active_support.use_solid_cache = false
   end
 end

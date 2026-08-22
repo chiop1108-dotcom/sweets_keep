@@ -1,0 +1,71 @@
+<div class="profile-edit-container">
+  <h2>Edit Profile</h2>
+
+  <div class="profile-edit-card">
+    <%= form_with model: @user do |f| %>
+      <!-- エラーメッセージ表示 -->
+      <% if @user.errors.any? %>
+        <div class="error-explanation">
+          <p class="error-title"><%= @user.errors.count %>件のエラーが発生しました</p>
+          <ul>
+            <% @user.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <!-- プロフィール画像 -->
+      <div class="field">
+        <%= f.label :profile_image, "プロフィール画像" %>
+        <div class="file-input-wrapper">
+          <%= f.file_field :profile_image, accept: "image/*", class: "form-control-file" %>
+        </div>
+      </div>
+
+      <!-- 名前（氏名） -->
+      <div class="field">
+        <%= f.label :name, "名前" %>
+        <%= f.text_field :name, autofocus: true, placeholder: "山田 太郎", class: "form-control" %>
+      </div>
+
+      <!-- フリガナ -->
+      <div class="field">
+        <%= f.label :name_kana, "フリガナ" %>
+        <%= f.text_field :name_kana, placeholder: "ヤマダ タロウ", class: "form-control" %>
+      </div>
+
+      <!-- ユーザー名 -->
+      <div class="field">
+        <%= f.label :user_name, "ユーザー名" %>
+        <%= f.text_field :user_name, placeholder: "yamada_taro", class: "form-control" %>
+      </div>
+
+      <!-- メールアドレス -->
+      <div class="field">
+        <%= f.label :email_address, "メールアドレス" %>
+        <%= f.email_field :email_address, placeholder: "example@email.com", class: "form-control" %>
+      </div>
+
+      <!-- 電話番号 -->
+      <div class="field">
+        <%= f.label :telephone_number, "電話番号" %>
+        <%= f.telephone_field :telephone_number, placeholder: "09012345678", class: "form-control" %>
+      </div>
+
+      <!-- 保存ボタン -->
+      <div class="actions">
+        <%= f.submit "編集を保存", class: "btn-submit" %>
+      </div>
+    <% end %>
+
+    <!-- 退会リンクエリア -->
+    <div class="unsubscribe-box">
+      <%= link_to "退会手続きはこちら", unsubscribe_user_path(@user), class: "btn-unsubscribe" %>
+    </div>
+  </div>
+
+  <div class="profile-edit-footer">
+    <%= link_to "← マイページに戻る", user_path(@user) %>
+  </div>
+</div>

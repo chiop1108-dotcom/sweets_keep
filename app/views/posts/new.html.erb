@@ -1,0 +1,9 @@
+<div class="post-form-container">
+  <h2><%= @post.persisted? ? "投稿の編集" : "Create Post" %></h2>
+
+  <%= render 'form', post: @post %>
+
+  <div class="post-form-footer">
+    <%= link_to "← 一覧へ戻る", posts_path %>
+  </div>
+</div>
