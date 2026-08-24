@@ -89,7 +89,7 @@
       <% end %>
 
       <!-- 投稿者 -->
-      <p class="author">投稿者: <%= @post.user&.user_name %></p>
+      <p class="author">投稿者: <%= link_to @post.user.user_name, user_path(@post.user) %></p>
 
       <!-- 編集・削除ボタンエリア -->
       <% if @post.user == Current.user || Current.user&.role_admin? %>
@@ -110,32 +110,52 @@
   </div>
 
   <!-- コメントエリア -->
-  <div>
-    <p>コメント件数：<%= @post.comments.count %></p>
-    <% @post.comments.each do |comment| %>
-      <p><%= image_tag comment.user.get_profile_image(100,100) %></p>
-      <%= comment.user.name %>
-      <%= comment.created_at.strftime('%Y/%m/%d') %>
-      <%= comment.content %>
+  <div class="comments-section">
+    <h3 class="comments-title">コメント件数：<%= @post.comments.size %></h3>
+    
+    <div class="comments-list">
+      <% @post.comments.each do |comment| %>
+        <div class="comment-item">
+          <div class="comment-avatar">
+            <%= image_tag comment.user.get_profile_image(100,100) %>
+          </div>
+          
+          <div class="comment-content-wrapper">
+            <div class="comment-header">
+              <span class="comment-author"><%= comment.user.name %></span>
+              <span class="comment-date"><%= comment.created_at.strftime('%Y/%m/%d') %></span>
+            </div>
+            
+            <p class="comment-text"><%= comment.content %></p>
 
-      <!-- コメント削除：作成者本人 OR 管理者 -->
-      <% if comment.user == Current.user || Current.user&.role_admin? %>
-        <%= link_to "削除", post_comment_path(@post, comment), 
-                    data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" } %>
+            <!-- コメント削除：作成者本人 OR 管理者 -->
+            <% if comment.user == Current.user || Current.user&.role_admin? %>
+              <div class="comment-action">
+                <%= link_to "削除", post_comment_path(@post, comment), 
+                            data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" },
+                            class: "btn-comment-delete" %>
+              </div>
+            <% end %>
+          </div>
+        </div>
       <% end %>
+    </div>
 
-    <% end %>
-  </div>
-
-  <div>
-    <%= form_with model: [@post, @comment] do |f| %>
-      <%= f.text_area :content, rows: '5', placeholder: "コメントをここに" %>
-      <%= f.submit "送信する" %>
-    <% end %>
+    <!-- コメント投稿フォーム -->
+    <div class="comment-form-wrapper">
+      <%= form_with model: [@post, @comment] do |f| %>
+        <div class="form-group">
+          <%= f.text_area :content, rows: '4', placeholder: "コメントをここに", class: "form-textarea" %>
+        </div>
+        <div class="form-action">
+          <%= f.submit "送信する", class: "btn-detail" %>
+        </div>
+      <% end %>
+    </div>
   </div>
 
   <!-- 戻るリンク -->
   <div class="post-detail-footer">
-    <%= link_to "← 投稿一覧へ戻る", posts_path %>
+    <%= link_to "← 投稿一覧へ戻る", posts_path, class: "btn-back" %>
   </div>
 </div>

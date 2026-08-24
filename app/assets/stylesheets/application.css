@@ -1879,3 +1879,226 @@ header {
   background-color: #e6d0d0;
   color: #3e2723;
 }
+
+/* 管理者画面テーブル・レイアウト用スタイル */
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 24px;
+}
+
+.admin-filter-group {
+  display: flex;
+  gap: 8px;
+}
+
+.admin-filter-group .btn-detail-outline.active {
+  background-color: #8C6A58; /* メインカラー（くすみブラウン） */
+  color: #FFFFFF;
+}
+
+.admin-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  background-color: #FFFFFF;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border: 1px solid #EAE5D9;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.admin-table th, 
+.admin-table td {
+  padding: 14px 18px;
+  border-bottom: 1px solid #EAE5D9;
+  color: #4A3E3D;
+  white-space: nowrap; /* テーブルセル内のテキストの自動改行をすべて防ぐ */
+}
+
+.admin-table th {
+  background-color: #FAF8F5;
+  font-weight: bold;
+  color: #5A4E4D;
+}
+
+.admin-table tbody tr:hover {
+  background-color: #FAF6F0;
+}
+
+/* 権限バッジ */
+.role-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.badge-admin {
+  background-color: #4A6B5D;
+  color: #FFFFFF;
+}
+
+.badge-general {
+  background-color: #D3C3B9;
+  color: #4A3E3D;
+}
+
+/* 操作エリア */
+.admin-action-btns {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  white-space: nowrap; /* ボタンやテキストの折り返しを防止 */
+}
+
+/* 強制退会ボタン */
+.btn-danger-custom {
+  background-color: #C85A54;
+  color: #FFFFFF;
+  padding: 6px 12px;     /* 横余白をほんの少し調整 */
+  border-radius: 20px;
+  text-decoration: none;
+  font-size: 13px;
+  display: inline-block;
+  transition: opacity 0.2s;
+  white-space: nowrap;   /* テキストの途中で絶対改行させない */
+  flex-shrink: 0;        /* 画面が狭くなってもボタン自体が潰れないようにする */
+}
+
+.btn-danger-custom:hover {
+  opacity: 0.85;
+  color: #FFFFFF;
+}
+
+.text-muted {
+  color: #999999;
+  font-size: 13px;
+}
+
+/* コメント全体セクション */
+.comments-section {
+  margin-top: 40px;
+  background-color: #FFFFFF;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border: 1px solid #EAE5D9;
+}
+
+.comments-title {
+  font-size: 18px;
+  color: #5A4E4D;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #FAF6F0;
+  padding-bottom: 8px;
+}
+
+/* コメントリスト */
+.comments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 30px;
+}
+
+.comment-item {
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+  background-color: #FAF8F5;
+  border-radius: 8px;
+}
+
+.comment-avatar img {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.comment-content-wrapper {
+  flex: 1;
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.comment-author {
+  font-weight: bold;
+  color: #4A3E3D;
+  font-size: 14px;
+}
+
+.comment-date {
+  font-size: 12px;
+  color: #8C827A;
+}
+
+.comment-text {
+  font-size: 14px;
+  color: #4A3E3D;
+  line-height: 1.5;
+  margin-bottom: 8px;
+  white-space: pre-wrap; /* 改行をそのまま反映 */
+}
+
+.btn-comment-delete {
+  color: #C85A54;
+  font-size: 12px;
+  text-decoration: underline;
+}
+
+.btn-comment-delete:hover {
+  opacity: 0.8;
+}
+
+/* コメントフォーム */
+.comment-form-wrapper {
+  border-top: 1px dashed #EAE5D9;
+  padding-top: 20px;
+}
+
+.form-textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #D3C3B9;
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-family: inherit;
+  resize: vertical;
+}
+
+.form-textarea:focus {
+  outline: none;
+  border-color: #8C6A58;
+}
+
+.form-action {
+  text-align: right;
+  margin-top: 10px;
+}
+
+.btn-back {
+  display: inline-block;
+  color: #8C6A58;
+  text-decoration: none;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+.btn-back:hover {
+  text-decoration: underline;
+}
