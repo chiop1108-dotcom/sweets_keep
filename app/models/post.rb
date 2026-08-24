@@ -23,7 +23,6 @@ class Post < ApplicationRecord
   # 必須チェック ＋ 0以上の整数のみ許可（マイナスを禁止）
   validates :price, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :carrying_time, presence: true
-  validates :genre, presence: true
   # ジャンルの必須チェックと、決められた選択肢のみ許可する設定
   validates :genre, presence: true, inclusion: { in: ["洋菓子", "和菓子", "和洋菓子", "その他"] }
 

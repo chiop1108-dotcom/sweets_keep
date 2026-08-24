@@ -17,14 +17,29 @@
   </div>
 
   <div class="top-new-posts">
-    <h3>New Post</h3>
-    <% @new_posts.each do |post| %>
-      <div class="top-post">
-        <%= image_tag post.image if post.image.attached? %>
-        <h4><%= post.product_name %></h4>
-        <%= link_to "詳細を見る", post_path(post), class: "btn-detail" %>
-      </div>
-    <% end %>
+    <h3 class="page-title">New Post</h3>
+    <div class="posts-container">
+      <% @new_posts.each do |post| %>
+        <div class="post-card">
+          <div class="post-image-wrapper">
+            <%= link_to post_path(post) do %>
+              <% if post.image.attached? %>
+                <%= image_tag post.image %>
+              <% else %>
+                <div class="no-image">No Image</div>
+              <% end %>
+            <% end %>
+          </div>
+          
+          <div class="post-content">
+            <h4 class="post-title"><%= post.product_name %></h4>
+            <div class="post-action">
+              <%= link_to "詳細を見る", post_path(post), class: "btn-detail-outline" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
   </div>
 
   <div class="top-genre-links filter-group">

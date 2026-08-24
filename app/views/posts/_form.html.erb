@@ -1,4 +1,16 @@
 <%= form_with model: post, class: "post-form-card" do |f| %>
+  <!-- エラーメッセージ表示 -->
+  <% if post.errors.any? %>
+    <div class="error-explanation">
+      <p class="error-title"><%= post.errors.count %>件のエラーが発生しました</p>
+      <ul>
+        <% post.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
   <div class="posts-new">
     <!-- 商品画像 -->
     <div class="field">

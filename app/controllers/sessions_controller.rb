@@ -10,20 +10,15 @@ class SessionsController < ApplicationController
       start_new_session_for user
       redirect_to user_path(user), notice: "ログインしました"
     else
-      redirect_to new_session_path, alert: "メールアドレスまたはパスワードが正しくありません"
+      flash.now[:alert] = "メールアドレスまたはパスワードが正しくありません"
+      render :new, status: :unprocessable_entity
     end
   end
 
   def destroy
     terminate_session
-  
-    # 残っているフラッシュメッセージをすべて削除する
-    # flash.clear 
-    
     # または「ログアウトしました」で上書きする場合
     redirect_to new_session_path, notice: "ログアウトしました"
-    
-    # redirect_to new_session_path
   end
   
 end

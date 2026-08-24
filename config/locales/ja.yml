@@ -1,10 +1,41 @@
 ja:
   activerecord:
     attributes:
+      user:
+        name: "名前"
+        name_kana: "フリガナ"
+        user_name: "ユーザー名"
+        email_address: "メールアドレス"
+        telephone_number: "電話番号"
+        password: "パスワード"
       post:
-        starage_temperature: "保存温度"
-        starage_temperatures:
-          room_temperature: "常温"
-          cool_dark_place: "冷暗所"
-          refrigerated: "冷蔵"
-          frozen: "冷凍"
+        product_name: "商品名"
+        shop_name: "店名"
+        price: "価格"
+        description: "説明"
+        rating: "評価"
+        area: "エリア"
+        storage_temperature: "保存温度"
+        carrying_time: "持ち歩き可能時間"
+        shelf_life: "日持ち"
+
+  errors:
+    messages:
+      blank: "を入力してください"
+      invalid: "は不正な値です"
+      taken: "はすでに存在します"
+      too_short: "は%{count}文字以上で入力してください"
+      not_a_number: "は数値で入力してください"
+      inclusion: "は一覧にない値です"
+      greater_than_or_equal_to: "は%{count}以上の値にしてください"
+      less_than_or_equal_to: "は%{count}以下の値にしてください"
+      greater_than: "は%{count}より大きい値にしてください"
+      less_than: "は%{count}より小さい値にしてください"
+
+  enums:
+    post:
+      storage_temperature:
+        room_temperature: "常温"
+        cool_dark_place: "冷暗所"
+        refrigerated: "冷蔵"
+        frozen: "冷凍"

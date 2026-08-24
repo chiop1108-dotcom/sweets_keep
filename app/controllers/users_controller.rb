@@ -25,7 +25,7 @@ class UsersController < ApplicationController
     if @user.update(user_params)
       redirect_to user_path(@user), notice: "プロフィールを更新しました"
     else
-      flash.now[:notice] = "更新に失敗しました"
+      flash.now[:alert] = "更新に失敗しました"
       render :edit, status: :unprocessable_entity
     end
   end
@@ -54,6 +54,7 @@ class UsersController < ApplicationController
       redirect_to user_path(@user), notice: "会員登録が完了しました！"
     else
       # 登録失敗時：新規登録画面を再描画
+      flash.now[:alert] = "入力内容に不備があります。確認してください。"
       render :new, status: :unprocessable_entity
     end
   end
