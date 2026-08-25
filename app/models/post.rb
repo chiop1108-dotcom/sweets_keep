@@ -35,4 +35,8 @@ class Post < ApplicationRecord
     frozen: 3            # 冷凍
   }, prefix: true
 
+  def favorited_by?(user)
+    favorites.exists?(user_id: user.id)
+  end
+
 end

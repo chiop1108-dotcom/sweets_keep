@@ -88,6 +88,24 @@
         </div>
       <% end %>
 
+      <div class="post-meta-footer">
+        <!-- 投稿日時 -->
+        <span class="post-date">投稿日時：<%= @post.created_at.strftime('%Y/%m/%d') %></span>
+        
+        <!-- いいね -->
+        <div class="favorite-box">
+          <% if @post.favorited_by?(Current.user) %>
+            <%= link_to post_favorite_path(@post), data: { turbo_method: :delete }, class: "favorite-link active" do %>
+              ♥ <%= @post.favorites.count %> いいね
+            <% end %>
+          <% else %>
+            <%= link_to post_favorite_path(@post), data: { turbo_method: :post }, class: "favorite-link" do %>
+              ♡ <%= @post.favorites.count %> いいね
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+
       <!-- 投稿者 -->
       <p class="author">投稿者: <%= link_to @post.user.user_name, user_path(@post.user) %></p>
 
