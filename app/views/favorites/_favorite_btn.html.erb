@@ -1,0 +1,12 @@
+<!-- 投稿ごとの一意なidを設定 -->
+<div id="favorite_btn_<%= post.id %>" class="favorite-box">
+  <% if post.favorited_by?(Current.user) %>
+    <%= link_to post_favorite_path(post), data: { turbo_method: :delete }, class: "favorite-link active" do %>
+      ♥ <%= post.favorites.count %> いいね
+    <% end %>
+  <% else %>
+    <%= link_to post_favorite_path(post), data: { turbo_method: :post }, class: "favorite-link" do %>
+      ♡ <%= post.favorites.count %> いいね
+    <% end %>
+  <% end %>
+</div>

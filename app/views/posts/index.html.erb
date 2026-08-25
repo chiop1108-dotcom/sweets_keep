@@ -31,17 +31,7 @@
         </div>
 
         <!-- いいね -->
-        <div class="favorite-box">
-          <% if post.favorited_by?(Current.user) %>
-            <%= link_to post_favorite_path(post), data: { turbo_method: :delete }, class: "favorite-link active" do %>
-              ♥ <%= post.favorites.count %> いいね
-            <% end %>
-          <% else %>
-            <%= link_to post_favorite_path(post), data: { turbo_method: :post }, class: "favorite-link" do %>
-              ♡ <%= post.favorites.count %> いいね
-            <% end %>
-          <% end %>
-        </div>
+        <%= render "favorites/favorite_btn", post: post %>
 
         <!-- コメント件数 -->
         <p><%= link_to "#{post.comments.count} コメント", post_path(post) %></p>
