@@ -15,7 +15,7 @@ ja:
         description: "説明"
         rating: "評価"
         area: "エリア"
-        storage_temperature: "保存温度"
+        starage_temperature: "保存温度"
         carrying_time: "持ち歩き可能時間"
         shelf_life: "日持ち"
 
@@ -34,7 +34,7 @@ ja:
 
   enums:
     post:
-      storage_temperature:
+      starage_temperature:
         room_temperature: "常温"
         cool_dark_place: "冷暗所"
         refrigerated: "冷蔵"
