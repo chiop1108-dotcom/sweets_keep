@@ -28,6 +28,6 @@ module SweetsKeep
     config.i18n.default_locale = :ja
     
     #Solid Cacheは本番での高速キャッシュ・大規模アプリ向けの仕組みなので、不要のため設定で外す
-    config.active_support.use_solid_cache = false
+    #config.active_support.use_solid_cache = false
   end
 end
