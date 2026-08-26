@@ -66,3 +66,6 @@ gem 'dotenv-rails'
 group :production do
   gem 'mysql2'
 end
+
+# 環境変数 公に公開したくない情報（値）
+gem 'dotenv-rails'

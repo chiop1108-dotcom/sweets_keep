@@ -22,7 +22,7 @@
     </div>
   </div>
 
-  <h3 class="section-title">投稿一覧</h3>
+  <h3 class="section-title">Posts</h3>
 
   <!-- ユーザーの投稿一覧（トップページ同様のグリッド配置） -->
   <div class="posts-grid">
@@ -64,8 +64,16 @@
             <p>📍 <%= post.area.presence || "未設定" %></p>
           </div>
 
+          <!-- いいね -->
+          <%= render "favorites/favorite_btn", post: post %>
+
           <!-- コメント件数 -->
           <p><%= link_to "#{post.comments.count} コメント", post_path(post) %></p>
+
+          <!-- 投稿者 -->
+          <!-- link_toと,user_path(post.user)を書き足すことで投稿者から他人のユーザーページへ遷移できるようにした -->
+          <p class="post-user">投稿者: <%= link_to post.user.user_name, user_path(post.user) %></p>
+
 
           <!-- 詳細ボタン -->
           <%= link_to "詳細を見る", post_path(post), class: "btn-detail" %>
@@ -77,4 +85,68 @@
   <div class="user-show-footer">
     <%= link_to "← トップページへ戻る", posts_path %>
   </div>
+
+  <h2>Likes</h2>
+
+  <!-- 投稿が存在するかの確認 -->
+  <% if @favorite_posts.any? %>
+    <div class="posts-grid">
+      <% @favorite_posts.each do |post| %>
+        <div class="post-card">
+          <!-- 商品画像 -->
+          <div class="post-image-wrapper">
+            <%= link_to post_path(post) do %>
+              <% if post.image.attached? %>
+                <%= image_tag post.image, class: "post-thumb" %>
+              <% else %>
+                <div class="no-image">No Image</div>
+              <% end %>
+            <% end %>
+          </div>
+
+          <!-- カード本文 -->
+          <div class="post-card-body">
+            <h4 class="product-name"><%= link_to post.product_name, post_path(post) %></h4>
+
+            <!-- 評価・価格 -->
+            <div class="price-rating">
+              <span class="rating">★ <%= post.rating || 0 %></span>
+              <span class="price">¥<%= number_with_delimiter(post.price) %></span>
+            </div>
+
+            <!-- 持ち歩き時間・エリア -->
+            <div class="post-meta">
+              <p>
+                ⏱️ 
+                <% if post.carrying_time == "free" %>
+                  常温OK
+                <% elsif post.carrying_time.present? %>
+                  <%= post.carrying_time %>時間
+                <% else %>
+                  未設定
+                <% end %>
+              </p>
+              <p>📍 <%= post.area.presence || "未設定" %></p>
+            </div>
+
+            <!-- いいね -->
+            <%= render "favorites/favorite_btn", post: post %>
+
+            <!-- コメント件数 -->
+            <p><%= link_to "#{post.comments.count} コメント", post_path(post) %></p>
+
+            <!-- 投稿者 -->
+            <!-- link_toと,user_path(post.user)を書き足すことで投稿者から他人のユーザーページへ遷移できるようにした -->
+            <p class="post-user">投稿者: <%= link_to post.user.user_name, user_path(post.user) %></p>
+
+            <!-- 詳細ボタン -->
+            <%= link_to "詳細を見る", post_path(post), class: "btn-detail" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <p>まだ「いいね」した投稿はありません。</p>
+  <% end %>
+
 </div>

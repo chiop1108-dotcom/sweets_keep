@@ -30,6 +30,9 @@
           <p>エリア: <%= post.area %></p>
         </div>
 
+        <!-- いいね -->
+        <%= render "favorites/favorite_btn", post: post %>
+
         <!-- コメント件数 -->
         <p><%= link_to "#{post.comments.count} コメント", post_path(post) %></p>
 

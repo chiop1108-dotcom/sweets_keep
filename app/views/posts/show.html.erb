@@ -88,6 +88,14 @@
         </div>
       <% end %>
 
+      <div class="post-meta-footer">
+        <!-- 投稿日時 -->
+        <span class="post-date">投稿日時：<%= @post.created_at.strftime('%Y/%m/%d') %></span>
+        
+        <!-- いいね -->
+        <%= render "favorites/favorite_btn", post: @post %>
+      </div>
+
       <!-- 投稿者 -->
       <p class="author">投稿者: <%= link_to @post.user.user_name, user_path(@post.user) %></p>
 

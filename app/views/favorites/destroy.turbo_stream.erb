@@ -1,0 +1,4 @@
+<!-- 部分テンプレートで設定したidの要素をピンポイントで差し替える指示 -->
+<%= turbo_stream.replace "favorite_btn_#{@post.id}" do %>
+  <%= render "favorites/favorite_btn", post: @post %>
+<% end %>

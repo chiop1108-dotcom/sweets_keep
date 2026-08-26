@@ -18,6 +18,8 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     # リレーションを利用し、ユーザーが投稿した記事一覧を表示する場合
     @posts = @user.posts.order(created_at: :desc)
+    # 自分がいいねした投稿を取得
+    @favorite_posts = @user.favorited_posts.includes(:user, :favorites)
   end
 
   def update
