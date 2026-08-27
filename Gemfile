@@ -69,3 +69,6 @@ end
 
 # 環境変数 公に公開したくない情報（値）
 gem 'dotenv-rails'
+
+gem 'rails-i18n'
+gem "enum_help"

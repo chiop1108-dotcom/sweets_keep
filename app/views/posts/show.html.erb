@@ -38,7 +38,7 @@
           <span class="info-label">保存温度</span>
           <span class="info-value"><%= I18n.t("enums.post.starage_temperature.#{@post.starage_temperature}") || "未設定" %></span>
           <!-- 元のコード -->
-          <!--- <span class="info-value"><%= @post.starage_temperature.presence || "未設定" %></span> -->
+          <span class="info-value"><%= @post.starage_temperature_i18n || "未設定" %></span>
         </div>
 
         <div class="info-item">
