@@ -18,6 +18,7 @@
           <th>ユーザー名</th>
           <th>メールアドレス</th>
           <th>現在の権限</th>
+          <th>登録日</th>
           <th>投稿数</th>
           <th>操作</th>
         </tr>
@@ -35,6 +36,7 @@
                 <span class="role-badge badge-general">一般</span>
               <% end %>
             </td>
+            <td data-label="登録日"><%= user.created_at.strftime('%Y/%m/%d %H:%M') %></td>
             <td data-label="投稿数"><%= user.posts.size %> 件</td>
             <td data-label="操作">
               <div class="admin-action-btns">
@@ -59,5 +61,9 @@
         <% end %>
       </tbody>
     </table>
+  </div>
+
+  <div class="admin-pagination">
+    <%= paginate @users %>
   </div>
 </div>

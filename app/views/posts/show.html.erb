@@ -36,8 +36,6 @@
       <div class="info-grid">
         <div class="info-item">
           <span class="info-label">保存温度</span>
-          <span class="info-value"><%= I18n.t("enums.post.starage_temperature.#{@post.starage_temperature}") || "未設定" %></span>
-          <!-- 元のコード -->
           <span class="info-value"><%= @post.starage_temperature_i18n || "未設定" %></span>
         </div>
 
@@ -89,6 +87,13 @@
           </div>
         </div>
       <% end %>
+
+      <!-- タグ -->
+      <div class="post-tags-scroll">
+        <% @post.tags.each do |tag| %>
+          <%= link_to "##{tag.name}", search_path(tag_id: tag.id), class: "tag-chip" %>
+        <% end %>
+      </div>
 
       <div class="post-meta-footer">
         <!-- 投稿日時 -->

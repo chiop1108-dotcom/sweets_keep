@@ -4,24 +4,27 @@ class CommentsController < ApplicationController
     post = Post.find(params[:post_id])
     comment = Current.user.comments.new(comment_params)
     comment.post_id = post.id
-    comment.save
-    redirect_to post_path(post)
+    if comment.save
+      redirect_to post_path(post), notice: "コメントを投稿しました"
+    else
+      redirect_to post_path(post), alert: "コメントの投稿に失敗しました"
+    end
   end
 
   def destroy
-    # Current.userのコメントの中から探すことで、本人のコメントしか削除できないようにする
-    # params[:id]は「削除したいコメント」のID。コメントを特定して削除（Comment.find）するために使う
-    comment = Current.user.comments.find(params[:id])
-    
-    if comment
-      # コメントを削除
+    # 全コメントの中から該当するコメントを取得 管理者でもコメントを取得できる
+    comment = Comment.find(params[:id])
+
+    # 「コメントした本人」または「管理者」であるかチェック
+    if comment.user == Current.user || Current.user&.role_admin?
       comment.destroy
       flash[:notice] = "コメントを削除しました"
     else
-      flash[:alert] = "権限がありません"
+      flash[:alert] = "削除する権限がありません"
     end
-    # params[:post_id]は「親である投稿」のID。コメント削除後に「コメントしていた元の投稿詳細画面（post_path）」へ戻る（リダイレクトする）ために使う
-    redirect_to post_path(params[:post_id]), notice: "コメントを削除しました"
+
+    # 元の投稿詳細画面へリダイレクト
+    redirect_to post_path(params[:post_id])
   end
 
   private

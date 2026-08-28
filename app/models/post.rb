@@ -6,10 +6,12 @@ class Post < ApplicationRecord
   has_one_attached :image
 
   # アソシエーション
-  has_many :tags, through: :post_tags # 多：多の関係を定義
   has_many :post_tags, dependent: :destroy
+  # throughを使うアソシエーションは、元となるアソシエーションの下に書くのがRailsのルール
+  has_many :tags, through: :post_tags # 多：多の関係を定義
   has_many :comments, dependent: :destroy
   has_many :favorites, dependent: :destroy
+  has_many :favorited_users, through: :favorites, source: :user
 
   # バリデーション
   validates :user_id, presence: true
@@ -36,7 +38,32 @@ class Post < ApplicationRecord
   }, prefix: true
 
   def favorited_by?(user)
+    # user が nil（未ログイン）の場合は、エラーを出さずに false（いいねしていない）を返す
+    return false if user.nil?
+
     favorites.exists?(user_id: user.id)
+  end
+
+  def tag_names
+    tags.pluck(:name).join(', ')
+  end
+
+  # フォームから渡されたタグ文字列を受け取り、保存・紐付けを行う処理
+  def save_tags(tag_list_string)
+    return if tag_list_string.nil?
+
+    # 全角カンマ・読点・スペースを半角カンマに統一し、カンマ区切りで配列化（空白文字は除去）
+    current_tags = tag_list_string.to_s.tr('，、 ', ',,, ').split(',').map(&:strip).uniq.reject(&:empty?)
+
+    # 現在紐づいているタグから、送信データに含まれないものを解除
+    new_tags = current_tags.map do |tag_name|
+      Tag.find_or_create_by(name: tag_name) do |tag|
+        tag.category = "未分類" # ← ここを追加！（DBの制限を回避するためのデフォルトカテゴリ）
+      end
+    end
+
+    # 新しいタグ一覧で更新（古くなったアソシエーションは自動削除される）
+    self.tags = new_tags
   end
 
 end

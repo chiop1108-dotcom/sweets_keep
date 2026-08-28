@@ -1,12 +1,7 @@
 <div class="about-container">
 
   <!-- 検索バー -->
-  <div class="about-search-bar">
-    <%= form_with url: search_path, method: :get do |f| %>
-      <%= f.text_field :query, placeholder: "検索..." %>
-      <%= f.submit "検索" %>
-    <% end %>
-  </div>
+  <%= render 'shared/search_form' %>
 
   <div class="hero-bg" style="background-image: url('<%= asset_path('dorayaki_chantilly.jpg') %>');">
     

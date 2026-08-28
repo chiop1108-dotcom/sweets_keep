@@ -30,6 +30,13 @@
           <p>エリア: <%= post.area %></p>
         </div>
 
+        <!-- タグ -->
+        <div class="post-tags-scroll">
+          <% post.tags.each do |tag| %>
+            <%= link_to "##{tag.name}", search_path(tag_id: tag.id), class: "tag-chip" %>
+          <% end %>
+        </div>
+
         <!-- いいね -->
         <%= render "favorites/favorite_btn", post: post %>
 
