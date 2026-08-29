@@ -64,7 +64,7 @@ Post.find_or_create_by!(product_name: "どらやき", shop_name: "和菓子屋�
   post.description = "はちみつの香りが優しいです。餡もゆるくて暖かい味です。"
   post.rating = 5
   post.starage_temperature = 0
-  post.carrying_time = "常温OK"
+  post.carrying_time = "free"
   post.shelf_life = 3
   post.area = "東京都中央区"
   post.price = 350
@@ -82,7 +82,7 @@ Post.find_or_create_by!(product_name: "X'mas ショートケーキ", shop_name: 
   post.description = "いちごがたっぷりで甘さ控えめの美味しいケーキです。"
   post.rating = 5
   post.starage_temperature = 2
-  post.carrying_time = "2時間以内"
+  post.carrying_time = "2"
   post.shelf_life = 1
   post.area = "東京都渋谷区"
   post.price = 4000
@@ -100,7 +100,7 @@ Post.find_or_create_by!(product_name: "マドレーヌ ショコラ", shop_name:
   post.description = "チョコチップが入っていて、チョコを堪能できます。"
   post.rating = 4
   post.starage_temperature = 0
-  post.carrying_time = "常温OK"
+  post.carrying_time = "free"
   post.shelf_life = 7
   post.area = "東京都渋谷区"
   post.price = 450
@@ -118,7 +118,7 @@ Post.find_or_create_by!(product_name: "どら焼き", shop_name: "WAGASHI") do |
   post.description = "スタンダードなどら焼き。どこか懐かしさを感じます。"
   post.rating = 5
   post.starage_temperature = 0
-  post.carrying_time = "常温OK"
+  post.carrying_time = "free"
   post.shelf_life = 3
   post.area = "京都府京都市左京区"
   post.price = 350
@@ -136,7 +136,7 @@ Post.find_or_create_by!(product_name: "どら焼き マスカルポーネ", shop
   post.description = "生クリームほど重くならず、食べやすいです。すぐに食べ終わってしまいました。"
   post.rating = 5
   post.starage_temperature = 2
-  post.carrying_time = "1時間以内"
+  post.carrying_time = "1"
   post.shelf_life = 1
   post.area = "東京都台東区"
   post.price = 480
@@ -154,7 +154,7 @@ Post.find_or_create_by!(product_name: "どらパンケーキ", shop_name: "Cafe 
   post.description = "新感覚！甘じょっぱくておいしいです。"
   post.rating = 4
   post.starage_temperature = 1
-  post.carrying_time = "1時間以内"
+  post.carrying_time = "1"
   post.shelf_life = 1
   post.area = "東京都渋谷区"
   post.price = 1100
@@ -172,7 +172,7 @@ Post.find_or_create_by!(product_name: "卵サンどらやき", shop_name: "Cafe 
   post.description = "お惣菜感覚のお菓子です。"
   post.rating = 3
   post.starage_temperature = 2
-  post.carrying_time = "1時間以内"
+  post.carrying_time = "1"
   post.shelf_life = 1
   post.area = "東京都渋谷区"
   post.price = 390
@@ -190,7 +190,7 @@ Post.find_or_create_by!(product_name: "どら焼き 抹茶ティラミス", shop
   post.description = "抹茶好き必見の一品。海外のお客さんも多かったです。"
   post.rating = 5
   post.starage_temperature = 2
-  post.carrying_time = "1時間以内"
+  post.carrying_time = "1"
   post.shelf_life = 1
   post.area = "東京都台東区"
   post.price = 610
