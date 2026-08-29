@@ -33,8 +33,8 @@ Rails.application.routes.draw do
   # mypage
   get "mypage", to: "users#mypage"
 
-  # PostsControllerのsearchアクションに送る
-  get "search", to: "posts#search", as: :search
+  # search_pathを定義する (検索機能)
+  get 'search', to: 'searches#search', as: 'search'
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

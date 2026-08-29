@@ -11,7 +11,7 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :favorites, dependent: :destroy
   # favoritesを経由していいねしたPostを取得できる
-  has_many :favorited_posts, through: :favorites, source: :post
+  has_many :favorite_posts, through: :favorites, source: :post
 
   # DB内の「0」を general（一般ユーザー）、「1」を admin（管理者）として扱う定義
   enum :role, { general: 0, admin: 1 }, prefix: true

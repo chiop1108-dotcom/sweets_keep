@@ -3,15 +3,19 @@ class Admin::UsersController < ApplicationController
   before_action :require_admin
 
   def index
+    # 新しい順に並べる 500件ずつ表示
+    @users = User.order(created_at: :desc)
+
     # 役割による絞り込み（?role=admin または ?role=generalなどの検索パラメータが入っているかを確認）
     # params[:role].present?: role パラメータが空でないか
     # User.roles.key?(params[:role]): 指定された値がUser モデルに定義されたEnumのキーとして正しく存在するか（不正なパラメータを防ぐ）
     if params[:role].present? && User.roles.key?(params[:role])
-      # 指定された権限（role）のユーザーだけをデータベースから探して、作成日時（created_at）が新しい順（desc = 降順）で取得
-      @users = User.where(role: params[:role]).order(created_at: :desc)
-    else
-      @users = User.all.order(created_at: :desc)
+      # 指定された権限（role）のユーザーだけをデータベースから探す
+      @users = @users.where(role: params[:role])
     end
+
+    # ページネーションの適用
+    @users = @users.page(params[:page]).per(500)
   end
 
   # 権限の切り替え（一般 ⇄ 管理者）

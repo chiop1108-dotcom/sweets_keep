@@ -10,76 +10,37 @@ class PostsController < ApplicationController
   before_action :authorize_owner_or_admin!, only: [:destroy]
 
   def new
-
     # フォーム用の空の新しいPostオブジェクトを作成
     @post = Post.new
   end
 
   def index
     # ベース：新しい投稿順にすべて取得
-    # commentsを事前読み込みしておく　処理が重くならない
-    @posts = Post.includes(:comments, :user).order(created_at: :desc)
+    # comments, user, tagsを事前読み込みしておく　処理が重くならない
+    @posts = Post.includes(:comments, :user, :tags).order(created_at: :desc)
 
-    # キーワード検索（商品名 OR エリア OR 店名 OR 持ち歩き可能時間 OR 日持ち OR ジャンル OR 紹介文 OR 投稿者名 OR タグ名 OR タグカテゴリー）
-    if params[:keyword].present?
-      kw = "%#{params[:keyword]}%"
-      # joins(:user) を使うことで、関連するユーザーテーブルの user_name も検索対象にできる
-      # @posts = @posts.joins(:user).joins(post_tags: :tag).where(
-      # left_outer_joins(:user, post_tags: :tag)でタグが0個の投稿でもキーワード検索にヒットする
-      @posts = @posts.left_outer_joins(:user, post_tags: :tag).where(
-        "posts.product_name LIKE ? OR " \
-        "posts.area LIKE ? OR " \
-        "posts.shop_name LIKE ? OR " \
-        "posts.carrying_time LIKE ? OR " \
-        "posts.shelf_life LIKE ? OR " \
-        "posts.genre LIKE ? OR " \
-        "posts.description LIKE ? OR " \
-        "users.user_name LIKE ? OR " \
-        "tags.name LIKE ? OR " \
-        "tags.category LIKE ? " \
-        ,kw, kw, kw, kw, 
-        kw, kw, kw, kw, kw, kw
-      ).distinct # タグが複数登録された際、同じ投稿が重複して一覧に表示されるのを防ぐ
-    end
-
-    # ジャンル（genre）が指定されている場合、そのジャンルで絞り込む
-    if params[:genre].present?
-      @posts = @posts.where(genre: params[:genre])
-    end
-
-    # 持ち歩き時間（指定した時間「以下」 または 「常温OK」）
-    if params[:carrying_time].present?
-      if params[:carrying_time] == "free"
-        @posts = @posts.where(carrying_time: "free")
-      else
-        @posts = @posts.where("carrying_time <= ?", params[:carrying_time])
-      end
-    end
-
-    # 賞味期限（指定した日数「以上」）
-    if params[:shelf_life].present?
-      @posts = @posts.where("shelf_life >= ?", params[:shelf_life])
-    end
-
+    # 送られてきたtag_nameに紐づく投稿を絞り込む tag_nameが送られてなければ全投稿の表示
+    if params[:tag_name].present?
+    @posts = @posts.joins(:tags).where(tags: { name: params[:tag_name] })
+  end
   end
 
   def show
-    # URLのidをもとに該当の投稿を1件取得（例: /posts/1）
-    @post = Post.find(params[:id])
     @comment = Comment.new
   end
 
-  def create
+ def create
+    # post_paramsからtag_namesを除外してPostインスタンスを作成
     # 許可されたパラメータを使ってインスタンスを作成
-    #フォームから送られてきたデータをセットした新しいオブジェクトを作成
-    @post = Post.new(post_params)
+    @post = Post.new(post_params.except(:tag_names))
     # ログイン中のユーザーIDをセット
     @post.user_id = Current.user.id
 
-    # @post = Current.user.posts.build(post_params)は@post = Post.new(post_params)と@post.user_id = Current.user.idをまとめた書き方
-
     if @post.save
-      # 保存成功：投稿一覧画面へリダイレクト
+      # 保存成功：タグの保存を実行
+      if post_params[:tag_names].present?
+        @post.save_tags(post_params[:tag_names]) 
+      end
       redirect_to posts_path, notice: "投稿を作成しました"
     else
       # 保存失敗：入力内容を保持したまま新規作成画面（new.html.erb）を再描画
@@ -89,31 +50,40 @@ class PostsController < ApplicationController
   end
 
   def edit
-    # URLのidをもとに該当の投稿を1件取得（例: /posts/1）
-    @post = Post.find(params[:id])
   end
 
-  def update
-    @post = Post.find(params[:id])
-    if @post.update(post_params)
+ def update
+    # tag_namesを除外して更新
+    if @post.update(post_params.except(:tag_names))
+
+      # 更新成功：タグの更新を実行
+      if post_params[:tag_names].present?
+        @post.save_tags(post_params[:tag_names])
+      else
+        @post.tags.clear
+      end
+
       redirect_to post_path(@post.id), notice: "投稿を編集しました"
     else
-      flash.now[:alert] = "更新できませんでした"
-      # バリデーションエラー時は編集画面（edit）を再描画する
-      render :edit, status: :unprocessable_entity, locals: { post: @post }
+      # flash.now[:alert] = "更新できませんでした"
+      # # バリデーションエラー時は編集画面（edit）を再描画する
+      # render :edit, status: :unprocessable_entity, locals: { post: @post }
+
+      flash.now[:alert] = "更新失敗のエラー内容: " + @post.errors.full_messages.join(", ")
+    render :edit, status: :unprocessable_entity, locals: { post: @post }
     end
   end
 
   def destroy
-    # URLのidをもとに該当の投稿を1件取得（例: /posts/1）
-    post = Post.find(params[:id])
     # 投稿を削除
-    post.destroy
+    @post.destroy
     redirect_to posts_path, notice: "投稿を削除しました"
   end
 
   private
 
+  # コントローラー内で何度も使う同じ処理をまとめたメソッド
+  # 重複していた @post の取得を共通化
   def set_post
     @post = Post.find(params[:id])
   end
@@ -146,7 +116,8 @@ class PostsController < ApplicationController
       :area,
       :price,
       :genre,
-      :image # ActiveStorageの画像
+      :image, # ActiveStorageの画像
+      :tag_names  # カンマ区切りのタグ文字列を許可
     )
   end
 

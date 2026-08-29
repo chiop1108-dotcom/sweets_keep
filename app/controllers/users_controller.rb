@@ -1,29 +1,35 @@
 class UsersController < ApplicationController
   # 認証をスキップ: サインアップ（new, create）はログイン前に行うため
   allow_unauthenticated_access only: [:new, :create, :show]
+  # @user を事前にセット
+  before_action :set_user, only: [:show, :edit, :update, :unsubscribe, :destroy]
   # 1. ログインチェック（未ログインならログイン画面へ）
   before_action :require_authentication, only: [:edit, :update, :unsubscribe, :destroy]
   # 2. 本人チェック（他人ならリダイレクト）
   before_action :ensure_correct_user, only: [:edit, :update, :unsubscribe, :destroy]
 
   def unsubscribe
-    @user = User.find(params[:id])
   end
 
   def edit
-    @user = User.find(params[:id])
   end
 
-  def show
-    @user = User.find(params[:id])
-    # リレーションを利用し、ユーザーが投稿した記事一覧を表示する場合
-    @posts = @user.posts.order(created_at: :desc)
+  def show  
+  # 表示するタブ
+  @tab = params[:tab] || 'posts'
+  # お気に入り投稿の一覧を取得して変数に入れる
+  @favorite_posts = @user.favorite_posts
+
+  if @tab == 'favorites'
     # 自分がいいねした投稿を取得
-    @favorite_posts = @user.favorited_posts.includes(:user, :favorites)
+    @posts = @user.favorite_posts.includes(:user, :favorites, :tags).order(created_at: :desc)
+  else
+    # ユーザーが投稿した一覧を取得
+    @posts = @user.posts.includes(:tags).order(created_at: :desc)
   end
+end
 
   def update
-    @user = User.find(params[:id])
     if @user.update(user_params)
       redirect_to user_path(@user), notice: "プロフィールを更新しました"
     else
@@ -33,7 +39,6 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    @user = User.find(params[:id])
     @user.destroy
     terminate_session
     redirect_to new_user_path, notice: "退会手続きが完了しました"
@@ -62,6 +67,12 @@ class UsersController < ApplicationController
   end
 
   private
+
+  # コントローラー内で何度も使う同じ処理をまとめたメソッド
+  # 重複していた @user の取得を共通化
+  def set_user
+    @user = User.find(params[:id])
+  end
 
   # Strong Parameters（不正なデータ送信を防ぐセキュリティ機能）
   def user_params
