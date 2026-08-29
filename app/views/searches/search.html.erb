@@ -3,6 +3,13 @@
 <!-- 検索バー -->
 <%= render 'shared/search_form' %>
 
+<!-- タグ検索中は検索中のタグ名を表示 -->
+<% if @tag.present? %>
+  <div class="search-tag-status" style="margin: 15px 0; text-align: center;">
+    <h2>「<strong>#<%= @tag.name %></strong>」のタグが付いた投稿</h2>
+  </div>
+<% end %>
+<% pp @posts %>
 <% if @posts.present? %>
   <p class="search-count"><%= @posts.count %> 件の投稿が見つかりました。</p>
   
@@ -34,6 +41,13 @@
               <p>持ち歩き: <%= post.carrying_time %>時間</p>
             <% end %>
             <p>エリア: <%= post.area %></p>
+          </div>
+
+          <!-- タグ表示（ここから別のタグ検索へ飛べる） -->
+          <div class="post-tags-scroll">
+            <% post.tags.each do |tag| %>
+              <%= link_to "##{tag.name}", search_path(tag_id: tag.id), class: "tag-chip" %>
+            <% end %>
           </div>
 
           <!-- いいね -->

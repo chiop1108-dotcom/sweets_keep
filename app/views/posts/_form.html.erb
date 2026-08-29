@@ -67,8 +67,20 @@
     <!-- 保存方法 -->
     <div class="field">
       <%= f.label :starage_temperature, "保存温度" %>
-      <%= f.select :preservation_method, ["常温", "冷暗所", "冷蔵", "冷凍"], { include_blank: "選択してください" }, { class: "form-control-select" } %>
-    </div>
+       <%#= f.select :starage_temperature, ["常温", "冷暗所", "冷蔵", "冷凍"], { include_blank: "選択してください" }, { class: "form-control-select" } %>
+     <%= f.select :starage_temperature,
+                              options_for_select(
+                                Post.starage_temperatures.keys.map { |starage_temperature|
+                                  [
+                                    I18n.t("enums.post.starage_temperature.#{starage_temperature}"),
+                                    starage_temperature
+                                  ]
+                                },
+                                post.starage_temperature
+                              ),
+                              { include_blank: "選択してください" },
+                              class: "form-control-select" %>
+      </div>
 
     <!-- 持ち歩き時間 -->
     <div class="field">

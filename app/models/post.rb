@@ -50,19 +50,17 @@ class Post < ApplicationRecord
 
   # フォームから渡されたタグ文字列を受け取り、保存・紐付けを行う処理
   def save_tags(tag_list_string)
-    return if tag_list_string.nil?
+   return if tag_list_string.blank?
 
-    # 全角カンマ・読点・スペースを半角カンマに統一し、カンマ区切りで配列化（空白文字は除去）
-    current_tags = tag_list_string.to_s.tr('，、 ', ',,, ').split(',').map(&:strip).uniq.reject(&:empty?)
+    # カンマやスペースで区切って文字の配列にする（例: ["いちご", "ケーキ"]）
+    tag_names = tag_list_string.to_s.tr('，、 ', ',,, ').split(',').map(&:strip).uniq.reject(&:empty?)
 
-    # 現在紐づいているタグから、送信データに含まれないものを解除
-    new_tags = current_tags.map do |tag_name|
-      Tag.find_or_create_by(name: tag_name) do |tag|
-        tag.category = "未分類" # ← ここを追加！（DBの制限を回避するためのデフォルトカテゴリ）
-      end
+    # タグを探す、無ければ category に "未分類" をセットして新しく作る
+    new_tags = tag_names.map do |name|
+      Tag.find_or_create_by(name: name)
     end
 
-    # 新しいタグ一覧で更新（古くなったアソシエーションは自動削除される）
+    # PostTag（中間テーブル）を紐付け 新しいタグ一覧で更新（古くなったアソシエーションは自動削除される）
     self.tags = new_tags
   end
 

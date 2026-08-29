@@ -6,12 +6,13 @@ class SearchesController < ApplicationController
 
   def search
     # ベース：新しい投稿順 ＋ 画像やコメントの重さを防ぐ事前読み込み
-    @posts = Post.includes(:comments, :user).order(created_at: :desc)
+    # comments,user,tagsを事前読み込み
+    @posts = Post.includes(:comments, :user, :tags).order(created_at: :desc)
 
     # タグ検索　(tag_idが送られてきた場合)
     if params[:tag_id].present?
       @tag = Tag.find_by(id: params[:tag_id])
-      @posts = @tag ? @tag.posts.includes(:comments, :user) : Post.none
+      @posts = @tag ? @tag.posts.includes(:comments, :user, :tags) : Post.none
     end
 
     # キーワード検索（商品名 OR エリア OR 店名 OR 持ち歩き可能時間 OR 日持ち OR ジャンル OR 紹介文 OR 投稿者名 OR タグ名 OR タグカテゴリー）
@@ -26,9 +27,8 @@ class SearchesController < ApplicationController
         "posts.genre LIKE ? OR " \
         "posts.description LIKE ? OR " \
         "users.user_name LIKE ? OR " \
-        "tags.name LIKE ? OR " \
-        "tags.category LIKE ? ",
-        kw, kw, kw, kw, kw, kw, kw, kw, kw, kw
+        "tags.name LIKE ? ",
+        kw, kw, kw, kw, kw, kw, kw, kw, kw
       ).distinct # タグが複数登録された際、同じ投稿が重複して一覧に表示されるのを防ぐ
     end
 

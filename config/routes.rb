@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  get "searches/search"
   # 認証機能
   resource :session
   resources :passwords, param: :token

@@ -18,6 +18,11 @@ class PostsController < ApplicationController
     # ベース：新しい投稿順にすべて取得
     # comments, user, tagsを事前読み込みしておく　処理が重くならない
     @posts = Post.includes(:comments, :user, :tags).order(created_at: :desc)
+
+    # 送られてきたtag_nameに紐づく投稿を絞り込む tag_nameが送られてなければ全投稿の表示
+    if params[:tag_name].present?
+    @posts = @posts.joins(:tags).where(tags: { name: params[:tag_name] })
+  end
   end
 
   def show
@@ -25,14 +30,17 @@ class PostsController < ApplicationController
   end
 
  def create
+    # post_paramsからtag_namesを除外してPostインスタンスを作成
     # 許可されたパラメータを使ってインスタンスを作成
-    @post = Post.new(post_params)
+    @post = Post.new(post_params.except(:tag_names))
     # ログイン中のユーザーIDをセット
     @post.user_id = Current.user.id
 
     if @post.save
       # 保存成功：タグの保存を実行
-      @post.save_tags(params[:post][:tag_names]) if post_params[:tag_names].present?
+      if post_params[:tag_names].present?
+        @post.save_tags(post_params[:tag_names]) 
+      end
       redirect_to posts_path, notice: "投稿を作成しました"
     else
       # 保存失敗：入力内容を保持したまま新規作成画面（new.html.erb）を再描画
@@ -45,13 +53,24 @@ class PostsController < ApplicationController
   end
 
  def update
-    if @post.update(post_params)
+    # tag_namesを除外して更新
+    if @post.update(post_params.except(:tag_names))
+
       # 更新成功：タグの更新を実行
-      @post.save_tags(post_params[:tag_names]) if post_params[:tag_names].present?      redirect_to post_path(@post.id), notice: "投稿を編集しました"
+      if post_params[:tag_names].present?
+        @post.save_tags(post_params[:tag_names])
+      else
+        @post.tags.clear
+      end
+
+      redirect_to post_path(@post.id), notice: "投稿を編集しました"
     else
-      flash.now[:alert] = "更新できませんでした"
-      # バリデーションエラー時は編集画面（edit）を再描画する
-      render :edit, status: :unprocessable_entity, locals: { post: @post }
+      # flash.now[:alert] = "更新できませんでした"
+      # # バリデーションエラー時は編集画面（edit）を再描画する
+      # render :edit, status: :unprocessable_entity, locals: { post: @post }
+
+      flash.now[:alert] = "更新失敗のエラー内容: " + @post.errors.full_messages.join(", ")
+    render :edit, status: :unprocessable_entity, locals: { post: @post }
     end
   end
 

@@ -56,16 +56,16 @@
           <span class="info-label">日持ち（目安）</span>
           <span class="info-value">
             <% case @post.shelf_life %>
-            <% when 1 %>
-              1日
-            <% when 3 %>
-              3日以内
-            <% when 7 %>
-              1週間以上
-            <% when 14 %>
-              2週間以上
-            <% when 30 %>
-              1ヶ月以上
+              <% when 1 %>
+                1日
+              <% when 3 %>
+                3日以内
+              <% when 7 %>
+                1週間以上
+              <% when 14 %>
+                2週間以上
+              <% when 30 %>
+                1ヶ月以上
             <% else %>
               <%= @post.shelf_life.present? ? "#{@post.shelf_life}日" : "未設定" %>
             <% end %>
@@ -89,11 +89,15 @@
       <% end %>
 
       <!-- タグ -->
-      <div class="post-tags-scroll">
+     <div class="post-tags-scroll">
+      <% if @post.tags.any? %>
         <% @post.tags.each do |tag| %>
           <%= link_to "##{tag.name}", search_path(tag_id: tag.id), class: "tag-chip" %>
         <% end %>
-      </div>
+      <% else %>
+        <p class="no-tags-text">タグはありません</p>
+      <% end %>
+    </div>
 
       <div class="post-meta-footer">
         <!-- 投稿日時 -->
