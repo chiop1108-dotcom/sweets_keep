@@ -11,7 +11,7 @@ class PostsController < ApplicationController
 
   def new
     # フォーム用の空の新しいPostオブジェクトを作成
-    @post = Post.new
+    @post = Post.new()
   end
 
   def index
