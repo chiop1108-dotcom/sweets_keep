@@ -27,6 +27,9 @@ class Post < ApplicationRecord
   validates :carrying_time, presence: true
   # ジャンルの必須チェックと、決められた選択肢のみ許可する設定
   validates :genre, presence: true, inclusion: { in: ["洋菓子", "和菓子", "和洋菓子", "その他"] }
+  # 画像のサイズと形式を制限するバリデーション
+  validates :image, content_type: ['image/png', 'image/jpeg'],
+                    size: { less_than: 5.megabytes, message: 'は5MB以下にしてください' }
 
   # 保存温度の enum 定義
   # キー名（英語）と DBに保存する数値（0, 1, 2...）をペアにする

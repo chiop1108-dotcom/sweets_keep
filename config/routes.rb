@@ -15,6 +15,13 @@ Rails.application.routes.draw do
     end
   end
 
+  # タグ検索用のルーティング
+  resources :tags, only: [] do
+    collection do
+      get :search # GET /tags/search
+    end
+  end
+
   # 管理者専用ルーティング
   # namespace :admin do...doでURLの先頭に /admin/ を自動で付与、一般ユーザー用の画面と管理者用の画面を明確に区別
   namespace :admin do

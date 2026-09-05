@@ -1,72 +1,92 @@
-<h1 class="page-title">検索結果</h1>
+<div class="search-results-container">
 
-<!-- 検索バー -->
-<%= render 'shared/search_form' %>
+  <!-- 1. トップページと同じカード型検索バー（中央寄せ） -->
+  <%= render 'shared/search_form', custom_class: 'top-search-bar' %>
 
-<!-- タグ検索中は検索中のタグ名を表示 -->
-<% if @tag.present? %>
-  <div class="search-tag-status" style="margin: 15px 0; text-align: center;">
-    <h2>「<strong>#<%= @tag.name %></strong>」のタグが付いた投稿</h2>
-  </div>
-<% end %>
-<% pp @posts %>
-<% if @posts.present? %>
-  <p class="search-count"><%= @posts.count %> 件の投稿が見つかりました。</p>
-  
-  <div class="posts-container">
-    <% @posts.each do |post| %>
-      <div class="post-card">
-        <!-- 商品画像 -->
-        <div class="post-image-wrapper">
-          <%= link_to post_path(post) do %>
-            <%= image_tag post.image if post.image.attached? %>
-          <% end %>
-        </div>
+  <!-- 2. タイトル & 検索状態ヘッダー -->
+  <div class="search-header-info">
+    <% if @tag.present? %>
+      <h1 class="search-status-title">
+        <span class="tag-badge">#<%= @tag.name %></span> の検索結果
+      </h1>
+    <% elsif params[:keyword].present? %>
+      <h1 class="search-status-title">
+        「<span class="keyword-highlight"><%= params[:keyword] %></span>」の検索結果
+      </h1>
+    <% else %>
+      <h1 class="page-title">検索結果</h1>
+    <% end %>
 
-        <div class="post-content">
-          <!-- 商品名 -->
-          <h2 class="post-title"><%= post.product_name %></h2>
-
-          <!-- 評価・価格 -->
-          <div class="post-info-row">
-            <span class="post-rating">★ <%= post.rating %></span>
-            <span class="post-price">¥<%= post.price %></span>
-          </div>
-
-          <!-- 持ち歩き時間・エリア -->
-          <div class="post-details">
-            <% if post.carrying_time == "free" %>
-              <p>持ち歩き: 常温OK</p>
-            <% else %>
-              <p>持ち歩き: <%= post.carrying_time %>時間</p>
-            <% end %>
-            <p>エリア: <%= post.area %></p>
-          </div>
-
-          <!-- タグ表示（ここから別のタグ検索へ飛べる） -->
-          <div class="post-tags-scroll">
-            <% post.tags.each do |tag| %>
-              <%= link_to "##{tag.name}", search_path(tag_id: tag.id), class: "tag-chip" %>
-            <% end %>
-          </div>
-
-          <!-- いいね -->
-          <%= render "favorites/favorite_btn", post: post %>
-
-          <!-- コメント件数 -->
-          <p><%= link_to "#{post.comments.count} コメント", post_path(post) %></p>
-
-          <!-- 投稿者 -->
-          <p class="post-user">投稿者: <%= link_to post.user.user_name, user_path(post.user) %></p>
-
-          <!-- 詳細を見るボタン -->
-          <div class="post-action">
-            <%= link_to "詳細を見る", post_path(post), class: "btn-detail-outline" %>
-          </div>
-        </div>
+    <!-- 3. 件数表示（バッジ付きのデザイン） -->
+    <% if @posts.present? %>
+      <div class="search-count-wrapper">
+        <span class="search-count-badge"><%= @posts.count %></span>
+        <span class="search-count-text">件の投稿が見つかりました</span>
       </div>
     <% end %>
   </div>
-<% else %>
-  <p class="no-results">該当する投稿が見つかりませんでした。</p>
-<% end %>
+
+  <!-- 4. 投稿一覧または該当なし表示 -->
+  <% if @posts.present? %>
+    <div class="posts-container">
+      <% @posts.each do |post| %>
+        <div class="post-card">
+          <!-- 商品画像 -->
+          <div class="post-image-wrapper">
+            <%= link_to post_path(post) do %>
+              <%= image_tag post.image if post.image.attached? %>
+            <% end %>
+          </div>
+
+          <div class="post-content">
+            <!-- 商品名 -->
+            <h2 class="post-title"><%= post.product_name %></h2>
+
+            <!-- 評価・価格 -->
+            <div class="post-info-row">
+              <span class="post-rating">★ <%= post.rating %></span>
+              <span class="post-price">¥<%= post.price %></span>
+            </div>
+
+            <!-- 持ち歩き時間・エリア -->
+            <div class="post-details">
+              <% if post.carrying_time == "free" %>
+                <p>持ち歩き: 常温OK</p>
+              <% else %>
+                <p>持ち歩き: <%= post.carrying_time %>時間</p>
+              <% end %>
+              <p>エリア: <%= post.area %></p>
+            </div>
+
+            <!-- タグ表示（ここから別のタグ検索へ飛べる） -->
+            <div class="post-tags-scroll">
+              <% post.tags.each do |tag| %>
+                <%= link_to "##{tag.name}", search_path(tag_id: tag.id), class: "tag-chip" %>
+              <% end %>
+            </div>
+
+            <!-- いいね -->
+            <%= render "favorites/favorite_btn", post: post %>
+
+            <!-- コメント件数 -->
+            <p><%= link_to "#{post.comments.count} コメント", post_path(post) %></p>
+
+            <!-- 投稿者 -->
+            <p class="post-user">投稿者: <%= link_to post.user.user_name, user_path(post.user) %></p>
+
+            <!-- 詳細を見るボタン -->
+            <div class="post-action">
+              <%= link_to "詳細を見る", post_path(post), class: "btn-detail-outline" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="no-results-card">
+      <p class="no-results-text">該当する投稿が見つかりませんでした。</p>
+      <p class="no-results-sub">条件を変えて再度検索してみてください。</p>
+    </div>
+  <% end %>
+
+</div>
