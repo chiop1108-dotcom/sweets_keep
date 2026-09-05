@@ -29,25 +29,66 @@ class PostsController < ApplicationController
     @comment = Comment.new
   end
 
- def create
-    # post_paramsからtag_namesを除外してPostインスタンスを作成
-    # 許可されたパラメータを使ってインスタンスを作成
+  def create
     @post = Post.new(post_params.except(:tag_names))
-    # ログイン中のユーザーIDをセット
     @post.user_id = Current.user.id
 
     if @post.save
-      # 保存成功：タグの保存を実行
-      if post_params[:tag_names].present?
-        @post.save_tags(post_params[:tag_names]) 
+      # 1. 手入力されたタグを取得（文字列をコンマで区切って配列化）
+      manual_tags = post_params[:tag_names].to_s.tr('，、 ', ',,, ').split(',').map(&:strip)
+      # 2. 画像があればVision API からタグ（配列）を取得 下の違いが気になる
+      ai_tags = @post.image.attached? ? Vision.get_image_data(@post.image) : []
+      # ai_tags = post_params[:image].present? ? Vision.get_image_data(post_params[:image]) : []
+
+      # 3. 手入力タグとAPIタグを合体して.uniqで重複を削除
+      all_tags = (manual_tags + ai_tags).uniq.reject(&:blank?)
+
+      # 4. 重複のないタグを1つずつ保存（すでに存在するタグは検索、なければ作成）
+      all_tags.each do |tag_name|
+        tag = Tag.find_or_create_by(name: tag_name)
+        @post.tags << tag unless @post.tags.include?(tag)
       end
+
       redirect_to posts_path, notice: "投稿を作成しました"
     else
-      # 保存失敗：入力内容を保持したまま新規作成画面（new.html.erb）を再描画
       flash.now[:alert] = "未入力の項目があります"
       render :new, status: :unprocessable_entity
     end
   end
+
+#  def create
+#     # post_paramsからtag_namesを除外してPostインスタンスを作成
+#     # 許可されたパラメータを使ってインスタンスを作成
+#     @post = Post.new(post_params.except(:tag_names))
+#     # ログイン中のユーザーIDをセット
+#     @post.user_id = Current.user.id
+
+#     if @post.save
+
+#       # 保存成功：フォームから直接入力されたタグがあれば保存
+#       if post_params[:tag_names].present?
+#         @post.save_tags(post_params[:tag_names]) 
+#       end
+
+#       # 画像が添付されていれば、Google Vision APIでタグを自動取得して保存
+#       # nil や空の場合を自動的に弾いてくれるので、if文でのチェックは不要
+#       if post_params[:image].present?
+#         # 先にAIからタグ（配列）を受け取る
+#         tags = Vision.get_image_data(post_params[:image])
+
+#         # 受け取ったタグを1つずつ@postに関連付けて保存する
+#         tags.each do |tag|
+#           @post.tags.create(name: tag)
+#         end
+#       end
+
+#       redirect_to posts_path, notice: "投稿を作成しました"
+#     else
+#       # 保存失敗：入力内容を保持したまま新規作成画面（new.html.erb）を再描画
+#       flash.now[:alert] = "未入力の項目があります"
+#       render :new, status: :unprocessable_entity
+#     end
+#   end
 
   def edit
   end

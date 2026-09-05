@@ -76,3 +76,10 @@ gem "enum_help"
 
 # ページネーション用Gem
 gem 'kaminari'
+
+# API
+# 環境変数を扱うためのgem
+gem 'dotenv-rails'
+
+# 画像のバリデーションを行うためのgem
+gem 'active_storage_validations'

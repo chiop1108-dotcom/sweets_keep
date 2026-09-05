@@ -161,16 +161,6 @@ header {
 }
 
 /* aboutページの検索バー */
-/* フォーム全体を中央揃え＆幅調整 */
-.about-search-bar {
-  display: flex;
-  justify-content: center; /* フォーム全体を横方向の中央に配置 */
-  margin: 20px auto;        /* 上下に余白、左右中央に寄せる */
-  width: 100%;             /* 親要素いっぱいに広げる */
-  max-width: 600px;        /* 広がりすぎないよう最大横幅を指定 */
-  margin-bottom: 24px;     /* 検索バーの下に余白 */
-}
-
 .hero-bg {
   position: relative;
   width: 100%;
@@ -183,60 +173,6 @@ header {
   align-items: center;    /* 垂直方向中央配置 */
   justify-content: center; /* 水平方向中央配置 */
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-}
-
-/* formタグ内の要素を横並びにする */
-/* aboutページの検索バー（トップページと同じデザイン） */
-.about-search-bar {
-  display: flex;
-  justify-content: center;
-  margin: 20px auto 30px;
-  width: 100%;
-  max-width: 600px;
-  filter: drop-shadow(0 2px 5px rgba(235, 180, 180, 0.2));
-}
-
-.about-search-bar form {
-  display: flex;
-  width: 100%;
-  gap: 10px;
-}
-
-/* 入力欄（角丸・やわらかいピンクベージュ背景） */
-.about-search-bar input[type="text"] {
-  flex: 1;
-  padding: 12px 20px;
-  font-size: 16px;
-  border: 2px solid #E6D0D0;
-  border-radius: 30px;
-  background-color: #FAF5F5;
-  outline: none;
-  transition: all 0.3s ease;
-}
-
-.about-search-bar input[type="text"]:focus {
-  border-color: #E0A8A8;
-  background-color: #ffffff;
-  box-shadow: 0 0 0 3px rgba(224, 168, 168, 0.2);
-}
-
-/* 検索ボタン（テラコッタカラーの丸型ボタン） */
-.about-search-bar input[type="submit"] {
-  padding: 10px 25px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  background-color: #E07A5F;
-  color: #ffffff;
-  border: none;
-  border-radius: 30px;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.about-search-bar input[type="submit"]:hover {
-  background-color: #D46A4F;
-  transform: translateY(-1px);
 }
 
 /* topページ */
@@ -331,68 +267,6 @@ header {
 .btn-shelf {
   background-color: #81B29A;
   color: #ffffff;
-}
-
-/* topページの検索バー */
-/* フォーム全体を中央揃え＆幅調整 */
-.top-search-bar {
-  display: flex;
-  justify-content: center;
-  margin: 20px auto;
-  width: 100%;
-  max-width: 600px;
-  /* 検索バー全体をふんわりさせる影を追加 */
-  filter: drop-shadow(0 2px 5px rgba(235, 180, 180, 0.2));
-}
-
-.top-search-bar form {
-  display: flex;
-  width: 100%;
-  gap: 10px; /* 少し間隔を広げる */
-}
-
-/* 入力欄 */
-.top-search-bar input[type="text"] {
-  flex: 1;
-  padding: 12px 20px;     /* 内側の余白を少し増やす */
-  font-size: 16px;
-  /* 枠線 */
-  border: 2px solid #E6D0D0;
-  /* 角を思い切り丸く */
-  border-radius: 30px;
-  background-color: #FAF5F5; /* ほんのりピンクがかった白 */
-  outline: none;           /* クリック時の青い枠を消す */
-  transition: all 0.3s;    /* 動きをなめらかに */
-}
-
-/* 入力欄をクリックしたときの効果 */
-.top-search-bar input[type="text"]:focus {
-  border-color: #E0A8A8;   /* 枠線を少し濃く */
-  background-color: #fff;  /* 背景を白に */
-  box-shadow: 0 0 0 3px rgba(224, 168, 168, 0.2); /* ふんわり光らせる */
-}
-
-/* 検索ボタン */
-.top-search-bar input[type="submit"] {
-  padding: 10px 25px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  /* ボタンをくすんだピンクに */
-  background-color: #E07A5F;
-  color: white;
-  border: none;
-  /* 角を丸く */
-  border-radius: 30px;
-  transition: all 0.3s;    /* 動きをなめらかに */
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* 少し立体感 */
-}
-
-/* ボタンにマウスを乗せたとき */
-.top-search-bar input[type="submit"]:hover {
-  background-color: #D46A4F; /* 少し濃くする */
-  transform: translateY(-1px); /* 少し上に浮かす */
-  box-shadow: 0 4px 8px rgba(0,0,0,0.15); /* 影を強く */
 }
 
 /* ボタンの親要素：横並び＆中央揃え */
@@ -2167,4 +2041,267 @@ header {
 
 .pagination a:hover {
   background-color: #f0f0f0;
+}
+
+/* 検索バー全体のデザイン 共通レイアウト */
+.search-form-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+/* 入力欄 & セレクトボックスのデザイン統一 */
+.search-input,
+.search-select {
+  padding: 8px 14px;
+  font-size: 13px;
+  color: #3e2723;
+  border: 2px solid #e6d0d0;
+  border-radius: 20px;
+  background-color: #faf5f5;
+  outline: none;
+  box-sizing: border-box;
+  transition: all 0.25s ease;
+}
+
+.search-input:focus,
+.search-select:focus {
+  border-color: #e0a8a8;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(224, 168, 168, 0.2);
+}
+
+/* 検索ボタン */
+.btn-search {
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: bold;
+  color: #ffffff;
+  background-color: #e07a5f;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(224, 122, 95, 0.3);
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-search:hover {
+  background-color: #d46a4f;
+  transform: translateY(-1px);
+}
+
+/* ヘッダー内の検索バー（コンパクト） */
+.header-search-bar .search-form-inner {
+  flex-wrap: nowrap;
+  gap: 6px;
+}
+
+.header-search-bar .search-input {
+  width: 150px;
+  padding: 6px 12px;
+}
+
+.header-search-bar .btn-search {
+  padding: 6px 12px;
+}
+
+/* トップ & About 画面の検索バー（カード型中央寄せ） */
+.top-search-bar,
+.about-search-bar {
+  max-width: 800px;
+  margin: 24px auto;
+  padding: 16px 20px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e6d0d0;
+}
+
+.top-search-bar .search-form-inner,
+.about-search-bar .search-form-inner {
+  justify-content: center;
+}
+
+.top-search-bar .field-keyword,
+.about-search-bar .field-keyword {
+  flex: 1 1 200px;
+}
+
+.top-search-bar .field-select,
+.about-search-bar .field-select {
+  flex: 0 1 auto;
+}
+
+/* 検索結果ページ全体のレイアウト */
+.search-results-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* 検索タイトル & 件数表示エリア */
+.search-header-info {
+  text-align: center;
+  margin: 20px 0 30px;
+}
+
+.search-status-title {
+  font-size: 22px;
+  color: #3e2723;
+  margin-bottom: 12px;
+  font-weight: bold;
+}
+
+/* タグやキーワードの強調表現 */
+.tag-badge {
+  color: #e07a5f;
+  background-color: #fdf0ed;
+  padding: 4px 12px;
+  border-radius: 16px;
+  border: 1px solid #f7d2c9;
+}
+
+.keyword-highlight {
+  color: #e07a5f;
+  font-weight: bold;
+}
+
+/* 件数表示（ふんわりカード＆バッジデザイン） */
+.search-count-wrapper {
+  display: inline-flex;
+  align-items: baseline; /* 数字と文字の下ラインを揃える */
+  gap: 4px;
+  background-color: #ffffff;
+  padding: 8px 20px;
+  border-radius: 20px;
+  border: 1px solid #e6d0d0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.search-count-badge {
+  background-color: transparent; /* 背景色（丸）をなくす */
+  color: #e07a5f;                /* 数字の色だけアクセントカラーに */
+  font-weight: bold;
+  font-size: 18px;               /* 少し大きめにして見やすく */
+  padding: 0;
+}
+
+.search-count-text {
+  font-size: 14px;
+  color: #6d4c41;
+  font-weight: 500;
+}
+
+/* 該当結果なしのデザイン */
+.no-results-card {
+  text-align: center;
+  padding: 40px 20px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  border: 1px dashed #e6d0d0;
+  max-width: 500px;
+  margin: 40px auto;
+}
+
+.no-results-text {
+  font-size: 16px;
+  font-weight: bold;
+  color: #3e2723;
+  margin-bottom: 8px;
+}
+
+.no-results-sub {
+  font-size: 13px;
+  color: #8d6e63;
+}
+
+/* 検索結果の投稿カードグリッド */
+/* タグ入力全体コンテナ */
+.tag-field-wrapper {
+  position: relative;
+}
+
+.tag-chips-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 2px solid #e6d0d0;
+  border-radius: 12px;
+  background-color: #faf5f5;
+  min-height: 48px;
+  cursor: text;
+}
+
+/* 個別タグチップ */
+.tag-chip-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #fdf0ed;
+  color: #e07a5f;
+  border: 1px solid #f7d2c9;
+  padding: 4px 10px;
+  border-radius: 16px;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+/* ×削除ボタン */
+.tag-remove-btn {
+  background: none;
+  border: none;
+  color: #e07a5f;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 2px;
+  font-weight: normal;
+}
+
+.tag-remove-btn:hover {
+  color: #d46a4f;
+}
+
+/* 内部入力インプット */
+.tag-inner-input {
+  border: none;
+  outline: none;
+  background: transparent;
+  flex: 1;
+  min-width: 150px;
+  font-size: 14px;
+  color: #3e2723;
+}
+
+/* 候補ドロップダウン */
+.tag-suggestions-box {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  border: 1px solid #e6d0d0;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  z-index: 10;
+  margin-top: 4px;
+  max-height: 180px;
+  overflow-y: auto;
+}
+
+.suggestion-item {
+  padding: 8px 14px;
+  font-size: 13px;
+  color: #6d4c41;
+  cursor: pointer;
+}
+
+.suggestion-item:hover {
+  background-color: #faf5f5;
+  color: #e07a5f;
 }

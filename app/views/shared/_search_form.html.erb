@@ -1,31 +1,46 @@
-<div class="search-bar">
-  <%= form_with url: search_path, method: :get do |f| %>
-    <!-- キーワード入力 -->
-    <div class="field">
-      <%= f.text_field :keyword, value: params[:keyword], placeholder: "キーワード検索..." %>
+<% wrapper_class = local_assigns[:custom_class] || "search-bar" %>
+
+<div class="<%= wrapper_class %>">
+  <%= form_with url: search_path, method: :get, class: "search-form-inner" do |f| %>
+
+    <!-- キーワード入力（共通） -->
+    <div class="field field-keyword">
+      <%= f.text_field :keyword, value: params[:keyword], placeholder: "キーワード検索...", class: "search-input" %>
     </div>
 
-    <!-- 保管温度（starage_temperature）プルダウン -->
-    <div class="field">
-      <%= f.select :starage_temperature, 
-            [["常温", "0"], ["冷暗所", "1"],["冷蔵", "2"], ["冷凍", "3"]], 
-            { include_blank: "保管温度を選択", selected: params[:starage_temperature] } %>
-    </div>
+    <%# ヘッダー以外（トップ・Aboutなど）のときだけ詳細検索項目を表示 %>
+    <% unless wrapper_class == "header-search-bar" %>
 
-    <!-- 価格（指定金額以下）プルダウン -->
-    <div class="field">
-      <%= f.select :price, 
-            [["1,000円以下", 1000], ["3,000円以下", 3000], ["5,000円以下", 5000]], 
-            { include_blank: "価格を選択", selected: params[:price] } %>
-    </div>
+      <!-- 保管温度（starage_temperature）プルダウン -->
+      <div class="field field-select">
+        <%= f.select :starage_temperature, 
+              [["常温", "0"], ["冷暗所", "1"],["冷蔵", "2"], ["冷凍", "3"]], 
+              { include_blank: "保管温度を選択", selected: params[:starage_temperature] },
+              class: "search-select" %>
+      </div>
 
-    <!-- 評価（指定星の数以上）プルダウン -->
-    <div class="field">
-      <%= f.select :rating, 
-            [["★1以上", 1], ["★2以上", 2], ["★3以上", 3], ["★4以上", 4], ["★5のみ", 5]], 
-            { include_blank: "評価を選択", selected: params[:rating] } %>
-    </div>
+      <!-- 価格（指定金額以下）プルダウン -->
+      <div class="field field-select">
+        <%= f.select :price, 
+              [["1,000円以下", 1000], ["3,000円以下", 3000], ["5,000円以下", 5000]], 
+              { include_blank: "価格を選択", selected: params[:price] },
+              class: "search-select" %>
+      </div>
 
-    <%= f.submit "検索" %>
+      <!-- 評価（指定星の数以上）プルダウン -->
+      <div class="field field-select">
+        <%= f.select :rating, 
+              [["★1以上", 1], ["★2以上", 2], ["★3以上", 3], ["★4以上", 4], ["★5のみ", 5]], 
+              { include_blank: "評価を選択", selected: params[:rating] },
+              class: "search-select" %>
+      </div>
+
+    <% end %>
+
+    <!-- 送信ボタン -->
+    <div class="field field-submit">
+      <%= f.submit "検索", class: "btn-search" %>
+    </div>
+    
   <% end %>
 </div>
