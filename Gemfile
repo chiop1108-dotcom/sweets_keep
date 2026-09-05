@@ -62,13 +62,9 @@ group :test do
   gem "selenium-webdriver"
 end
 
-gem 'dotenv-rails'
 group :production do
   gem 'mysql2'
 end
-
-# 環境変数 公に公開したくない情報（値）
-gem 'dotenv-rails'
 
 # enum
 gem 'rails-i18n'
@@ -79,6 +75,7 @@ gem 'kaminari'
 
 # API
 # 環境変数を扱うためのgem
+# 環境変数 公に公開したくない情報（値）
 gem 'dotenv-rails'
 
 # 画像のバリデーションを行うためのgem
