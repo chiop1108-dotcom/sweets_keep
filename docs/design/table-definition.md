@@ -1,0 +1,1 @@
+[テーブル定義書](https://docs.google.com/spreadsheets/d/1W5kL4RHvynyNYjUDvPH0StKBwtDv7XHwWZ57cpyNyf0/edit?usp=sharing)

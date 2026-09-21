@@ -12,7 +12,7 @@
 
 ### ターゲットユーザ
 - お手土産やお土産選びで「移動時間に耐えられるか」「日持ちはするか」「近くで購入できるところはあるか」に悩む人
-- お菓子が好きでよく買いまわる人
+- お菓子が好きな人
 ​
 ### 主な利用シーン
 - お手土産やお土産選びの時
@@ -27,16 +27,20 @@
 * **ER図:** テーブル同士のリレーション（関係性）
 * **テーブル定義書:** `users`, `posts`, `tags`, `post_tags`, `comments`, `favorites` の各カラム・型・制約
 * **ルーティング一覧:** Controller、Action、HTTPメソッド、URL、目的の一覧表
-### 3. インフラ・開発環境
-* **構成:** AWS（EC2, RDS）、Google Cloud Vision API など
-​
+
+- [アプリケーション詳細設計書](docs/app_detail_design.md)
+- [テーブル定義書](docs/table_definition.md)
+- [ER図](docs/er-diagram.png)
+- [UI Flows](docs/ui_flows.png)
+
 ## 開発環境
 - OS：Windows
 - 言語：HTML,CSS,JavaScript,Ruby,SQL
 - フレームワーク：Ruby on Rails
 - JSライブラリ：jQuery
 - IDE：Visual Studio Code（VSCode）
+- 外部API：Google Cloud Vision API,Google Cloud Translation API,Google Cloud Natural Language API
 ​
 ## 使用素材
-著作権を考慮し、自分が作成・撮影した画像を用いり、架空のデータを扱う予定です。
-なお今後、実在するデータを利用する際には、事前に著作権保持者と契約を結んだ上で利用します。
+- プロフィール画像：Geminiの画像生成機能で作成したものを使用。
+- その他の画像：自分でお菓子を製造・撮影した画像を使用。

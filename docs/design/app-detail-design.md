@@ -1,0 +1,1 @@
+[アプリケーション詳細設計書](https://docs.google.com/spreadsheets/d/1N-0tjzNBGGVttXu0TMvKWYTLH2yLH2yvfKirHIi441I/edit?usp=sharing)
