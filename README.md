@@ -30,7 +30,7 @@
 
 - [アプリケーション詳細設計書](docs/design/app_detail_design.md)
 - [テーブル定義書](docs/design/table_definition.md)
-- [ER図](docs/images/er-diagram.png)
+- [ER図](docs/images/er_diagram.png)
 - [UI Flows](docs/images/ui_flows.png)
 
 ## 開発環境
