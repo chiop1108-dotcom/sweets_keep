@@ -28,10 +28,10 @@
 * **テーブル定義書:** `users`, `posts`, `tags`, `post_tags`, `comments`, `favorites` の各カラム・型・制約
 * **ルーティング一覧:** Controller、Action、HTTPメソッド、URL、目的の一覧表
 
-- [アプリケーション詳細設計書](docs/app_detail_design.md)
-- [テーブル定義書](docs/table_definition.md)
-- [ER図](docs/er-diagram.png)
-- [UI Flows](docs/ui_flows.png)
+- [アプリケーション詳細設計書](docs/design/app_detail_design.md)
+- [テーブル定義書](docs/design/table_definition.md)
+- [ER図](docs/images/er-diagram.png)
+- [UI Flows](docs/images/ui_flows.png)
 
 ## 開発環境
 - OS：Windows
