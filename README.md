@@ -20,14 +20,6 @@
 - 美味しくて甘いものを探したい時
 
 ## 設計書
-### 1. 要件定義・基本設計
-* **機能要件:** ゲストログイン、投稿、検索、コメント、いいね、管理者機能などの機能一覧
-* **UI / 画面構成:** トップページ、詳細画面、マイページなどの画面構成案
-### 2. 詳細設計・データベース設計
-* **ER図:** テーブル同士のリレーション（関係性）
-* **テーブル定義書:** `users`, `posts`, `tags`, `post_tags`, `comments`, `favorites` の各カラム・型・制約
-* **ルーティング一覧:** Controller、Action、HTTPメソッド、URL、目的の一覧表
-
 - [アプリケーション詳細設計書](docs/design/app_detail_design.md)
 - [テーブル定義書](docs/design/table_definition.md)
 - [ER図](docs/images/er_diagram.png)
