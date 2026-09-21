@@ -88,7 +88,7 @@ class PostsController < ApplicationController
 #       flash.now[:alert] = "未入力の項目があります"
 #       render :new, status: :unprocessable_entity
 #     end
-#   end
+#   end 
 
   def edit
   end
