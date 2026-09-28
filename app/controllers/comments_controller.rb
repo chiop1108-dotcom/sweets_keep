@@ -2,8 +2,12 @@ class CommentsController < ApplicationController
 
   def create
     post = Post.find(params[:post_id])
-    comment = Current.user.comments.new(comment_params)
-    comment.post_id = post.id
+    # comment = Current.user.comments.new(comment_params)
+    # comment.post_id = post.id
+    # Rails のアソシエーションを活用して以下のように上の2行をまとめた。
+    # newとbuildの違いは、newはオブジェクトを作るだけでDBには保存されないが、buildはオブジェクトを作ると同時にDBに保存される。同じような意味。
+    # buildはアソシエーションのときによく使われる。今回のように、コメントを作るときに、どの投稿に対するコメントかを指定する必要があるので、buildを使う。
+    comment = post.comments.build(comment_params.merge(user: Current.user))
     if comment.save
       redirect_to post_path(post), notice: "コメントを投稿しました"
     else
