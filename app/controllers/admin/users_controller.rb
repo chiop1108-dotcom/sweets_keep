@@ -14,7 +14,7 @@ class Admin::UsersController < ApplicationController
       @users = @users.where(role: params[:role])
     end
 
-    # ページネーションの適用
+    # ページネーションの適用（1ページあたり500件表示する例）
     @users = @users.page(params[:page]).per(500)
   end
 

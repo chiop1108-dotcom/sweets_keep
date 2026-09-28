@@ -2305,3 +2305,10 @@ header {
   background-color: #faf5f5;
   color: #e07a5f;
 }
+
+/* 検索結果・投稿一覧のページネーション */
+.pagination-container {
+  display: flex;
+  justify-content: center; /* 中央揃え */
+  margin: 30px 0;         /* 上下の余白 */
+}
