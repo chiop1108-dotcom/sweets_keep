@@ -21,8 +21,11 @@ class PostsController < ApplicationController
 
     # 送られてきたtag_nameに紐づく投稿を絞り込む tag_nameが送られてなければ全投稿の表示
     if params[:tag_name].present?
-    @posts = @posts.joins(:tags).where(tags: { name: params[:tag_name] })
-  end
+      @posts = @posts.joins(:tags).where(tags: { name: params[:tag_name] })
+    end
+
+    # ページネーションの適用（1ページあたり30件表示する例）
+    @posts = @posts.page(params[:page]).per(30)
   end
 
   def show

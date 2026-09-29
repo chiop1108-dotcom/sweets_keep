@@ -20,7 +20,7 @@
     <!-- 3. 件数表示（バッジ付きのデザイン） -->
     <% if @posts.present? %>
       <div class="search-count-wrapper">
-        <span class="search-count-badge"><%= @posts.count %></span>
+        <span class="search-count-badge"><%= @posts_count %></span>
         <span class="search-count-text">件の投稿が見つかりました</span>
       </div>
     <% end %>
@@ -88,5 +88,10 @@
       <p class="no-results-sub">条件を変えて再度検索してみてください。</p>
     </div>
   <% end %>
+
+  <!-- ページネーション -->
+  <div class="pagination-container">
+    <%= paginate @posts %>
+  </div>
 
 </div>
