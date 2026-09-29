@@ -66,7 +66,9 @@ class SearchesController < ApplicationController
       @posts = @posts.where("shelf_life >= ?", params[:shelf_life])
     end
 
-    # ページネーションの適用（1ページあたり21件表示する例）
-    @posts = @posts.page(params[:page]).per(21)
+    # トータル件数を取得
+    @posts_count = @posts.count
+    # ページネーションの適用（1ページあたり30件表示する例）
+    @posts = @posts.page(params[:page]).per(30)
   end
 end

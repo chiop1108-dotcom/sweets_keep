@@ -24,8 +24,8 @@ class PostsController < ApplicationController
       @posts = @posts.joins(:tags).where(tags: { name: params[:tag_name] })
     end
 
-    # ページネーションの適用（1ページあたり21件表示する例）
-    @posts = @posts.page(params[:page]).per(21)
+    # ページネーションの適用（1ページあたり30件表示する例）
+    @posts = @posts.page(params[:page]).per(30)
   end
 
   def show
