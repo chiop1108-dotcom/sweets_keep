@@ -29,7 +29,7 @@
  /* ヘッダー */
 /* --- ヘッダー全体のレイアウト調整 --- */
 header {
-  background-color: #f0d8d8; /* さらに2トーン濃いピンクベージュ */
+  background-color: #f0d8d8; /* 濃いピンクベージュ */
   border-bottom: 2px solid #e0c0c0; /* 下線も合わせて濃く調整 */
   padding: 15px 20px;
 }
@@ -2311,4 +2311,41 @@ header {
   display: flex;
   justify-content: center; /* 中央揃え */
   margin: 30px 0;         /* 上下の余白 */
+}
+
+/* フッターのデザイン */
+/* ページ全体をフレックスボックスにして、コンテンツ量が少なくてもフッターを最下部に押し下げる設定 */
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1; /* コンテンツエリアを伸縮させてフッターを下に押す */
+}
+
+/* フッターの基本スタイル */
+.main-footer {
+  background-color: #f0d8d8; /* アプリの雰囲気に合わせて背景色を変更してください */
+  border-top: 1px solid #e0c0c0; /* 上部にさりげない区切り線 */
+  padding: 20px 0;
+  text-align: center;
+}
+
+.footer-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.copyright {
+  margin: 0;
+  font-size: 13px;
+  color: #6c757d; /* 控えめな文字色 */
 }
