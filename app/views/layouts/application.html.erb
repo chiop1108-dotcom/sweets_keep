@@ -23,38 +23,8 @@
   </head>
 
   <body>
-    <header>
-      <nav class="header-nav">
-        <ul class="header-menu-left">
-          <% if authenticated? %>
-            <!-- ログイン後 -->
-            <li><%= link_to "Post", new_post_path, class: "header-menu-left-btn" %></li>
-            <li><%= link_to "My page", user_path(Current.user), class: "header-menu-left-btn" %></li>
-            <li><%= link_to "Log out", session_path, data: { turbo_method: :delete }, class: "header-menu-left-btn" %></li>
-
-            <!-- 管理者側機能 -->
-            <% if Current.user&.role_admin? %>
-              <li><%= link_to "Admin", admin_root_path, class: "header-menu-left-btn" %></li>
-            <% end %>
-
-          <% else %>
-            <!-- ログイン前 -->
-            <li><%= link_to "About", about_path, class: "header-menu-left-btn" %></li>
-            <li><%= link_to "Sign up", new_user_path, class: "header-menu-left-btn" %></li>
-            <li><%= link_to "Log in", new_session_path, class: "header-menu-left-btn" %></li>
-          <% end %>
-        </ul>
-
-        <h1 class="header-title"><%= link_to "Sweets Keep", root_path %></h1>
-
-          <!-- 検索バー -->
-          <div class="header-menu-right">
-            <%= link_to "Top", root_path, class: "header-menu-right-btn" %>
-            <%= render 'shared/search_form', custom_class: 'header-search-bar' %>
-          </div>
-
-      </nav>
-    </header>
+    <!-- ヘッダーの呼び出し -->
+    <%= render 'layouts/header' %>
 
     <!-- メッセージ表示 -->
     <!-- flash.each にしておくと、notice や alert だけでなく、どんな種類のキー（flash.now[:alert] も含む）でも自動で取得して表示してくれる -->
@@ -68,8 +38,12 @@
       </div>
     <% end %>
 
+    <!-- メインコンテンツ -->
     <main class="main-content">
       <%= yield %>
     </main>
+
+    <!-- フッターの呼び出し -->
+    <%= render 'layouts/footer' %>
   </body>
 </html>
