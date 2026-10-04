@@ -25,6 +25,14 @@
 - [ER図](docs/images/er_diagram.png)
 - [UI Flows](docs/images/ui_flows.png)
 
+## プロジェクト行程
+- 開発開始日:2026/8/1
+- 要件定義:~2026/8/2
+- 画面設計:~2026/8/3
+- 基本設計:~2026/8/5
+- 詳細設計:~2026/8/6
+- 実装期間:~2026/8/28
+
 ## 開発環境
 - OS：Windows
 - 言語：HTML,CSS,JavaScript,Ruby,SQL
