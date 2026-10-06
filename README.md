@@ -25,7 +25,7 @@
 - [ER図](docs/images/er_diagram.png)
 - [UI Flows](docs/images/ui_flows.png)
 
-## プロジェクト行程
+## 開発行程
 - 開発開始日:2026/8/1
 - 要件定義:~2026/8/2
 - 画面設計:~2026/8/3
